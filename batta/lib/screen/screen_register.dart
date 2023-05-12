@@ -22,7 +22,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
         body: const SingleChildScrollView(
           child: Center(
-            child: Column(),
+            child: Column(
+              children: [],
+            ),
           ),
         ),
       ),
