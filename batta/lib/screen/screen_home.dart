@@ -34,34 +34,36 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   width: width * 0.85,
                   height: height * 0.3,
-                  child: Column(
+                  padding: EdgeInsets.symmetric(
+                    vertical: height * 0.03,
+                    horizontal: width * 0.03,
+                  ),
+                  child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text("인기 글"),
+                      Text("인기 글"),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            child: const Row(
-                              children: [
-                                Icon(
-                                  Icons.person,
-                                ),
-                                Text("익명"),
-                              ],
-                            ),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.person,
+                              ),
+                              Text("익명"),
+                            ],
                           ),
-                          const Text("2021/05/12 16:00"),
+                          Text("2021/05/12 16:00"),
                         ],
                       ),
-                      const Text(
+                      Text(
                         "제목",
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const Text("글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용")
+                      Text("글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용")
                     ],
                   ),
                 ),
@@ -77,34 +79,36 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   width: width * 0.85,
                   height: height * 0.3,
-                  child: Column(
+                  padding: EdgeInsets.symmetric(
+                    vertical: height * 0.03,
+                    horizontal: width * 0.03,
+                  ),
+                  child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text("나의 빠따"),
+                      Text("나의 빠따"),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            child: const Row(
-                              children: [
-                                Icon(
-                                  Icons.person,
-                                ),
-                                Text("익명"),
-                              ],
-                            ),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.person,
+                              ),
+                              Text("익명"),
+                            ],
                           ),
-                          const Text("2021/05/12 17:30"),
+                          Text("2021/05/12 17:30"),
                         ],
                       ),
-                      const Text(
+                      Text(
                         "제목",
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const Text("글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용")
+                      Text("글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용")
                     ],
                   ),
                 ),

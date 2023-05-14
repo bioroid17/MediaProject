@@ -1,20 +1,21 @@
+import 'package:batta/screen/screen_boardlist.dart';
 import 'package:batta/screen/screen_home.dart';
 import 'package:flutter/material.dart';
 
-class NavbarWidget extends StatefulWidget {
-  const NavbarWidget({super.key});
+class NavbarScreen extends StatefulWidget {
+  const NavbarScreen({super.key});
 
   @override
-  State<NavbarWidget> createState() => _NavbarWidgetState();
+  State<NavbarScreen> createState() => _NavbarScreenState();
 }
 
-class _NavbarWidgetState extends State<NavbarWidget> {
+class _NavbarScreenState extends State<NavbarScreen> {
   int _selectedIndex = 0; // 처음에 나올 화면 지정
 
   // 이동할 페이지
   final List<Widget> _pages = [
     const HomeScreen(),
-    const Text('page2'),
+    const BoardListScreen(),
     const Text('page3'),
     const Text('page4'),
   ];
@@ -38,19 +39,19 @@ class _NavbarWidgetState extends State<NavbarWidget> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: 'Home',
+              label: '홈',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Search',
+              icon: Icon(Icons.list_alt_outlined),
+              label: '게시판',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.notifications),
+              label: '알림',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),
-              label: 'Settings',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Settings',
+              label: '설정',
             ),
           ],
         ));
