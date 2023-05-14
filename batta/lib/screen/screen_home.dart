@@ -20,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
           title: const Text('BATTA 홈'),
           centerTitle: true,
         ),
+        backgroundColor: const Color(0xFFEFECE5),
         body: SingleChildScrollView(
           padding: EdgeInsets.symmetric(vertical: height * 0.05),
           child: Center(

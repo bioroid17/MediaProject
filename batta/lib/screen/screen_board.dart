@@ -1,0 +1,46 @@
+import 'package:batta/widget/widget_board.dart';
+import 'package:flutter/material.dart';
+
+class BoardScreen extends StatefulWidget {
+  final String type;
+
+  const BoardScreen({
+    super.key,
+    required this.type,
+  });
+
+  @override
+  State<BoardScreen> createState() => _BoardScreenState();
+}
+
+class _BoardScreenState extends State<BoardScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView.separated(
+          scrollDirection: Axis.vertical,
+          itemBuilder: (context, index) {
+            return Board(
+              boardNum: "$index",
+              type: widget.type,
+              title: "${widget.type} title${index + 1}",
+              content:
+                  "글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용",
+              username: "익명",
+              datetime: "2023-05-15 00:00",
+              profImage: "ㅁㄴㅇㄹ",
+            );
+          },
+          separatorBuilder: (context, index) => const Divider(
+            thickness: 1.8,
+            height: 20,
+            color: Color(0xFF0D2065),
+          ),
+          itemCount: 30,
+        ),
+      ),
+    );
+  }
+}
