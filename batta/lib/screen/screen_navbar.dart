@@ -1,5 +1,6 @@
 import 'package:batta/screen/screen_boardlist.dart';
 import 'package:batta/screen/screen_home.dart';
+import 'package:batta/screen/screen_notice.dart';
 import 'package:flutter/material.dart';
 
 class NavbarScreen extends StatefulWidget {
@@ -16,7 +17,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
   final List<Widget> _pages = [
     const HomeScreen(),
     const BoardListScreen(),
-    const Text('page3'),
+    const NoticeScreen(),
     const Text('page4'),
   ];
   @override
