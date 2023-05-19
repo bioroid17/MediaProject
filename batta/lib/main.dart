@@ -1,4 +1,5 @@
 import 'package:batta/screen/screen_login.dart';
+import 'package:batta/screen/screen_notification.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,6 +15,36 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       title: 'BATTA',
       home: LoginScreen(),
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    FlutterLocalNotification.init();
+
+    Future.delayed(const Duration(seconds: 3),
+        FlutterLocalNotification.requestNotificationPermission());
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: TextButton(
+          onPressed: () => FlutterLocalNotification.showNotification(),
+          child: const Text("알림 보내기"),
+        ),
+      ),
     );
   }
 }
