@@ -1,5 +1,5 @@
 import 'package:batta/screen/screen_login.dart';
-import 'package:batta/screen/screen_notification.dart';
+import 'package:batta/service/flutter_local_notification.dart';
 import 'package:flutter/material.dart';
 
 void main() {
