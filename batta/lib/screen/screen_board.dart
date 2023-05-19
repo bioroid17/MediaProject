@@ -1,7 +1,7 @@
 import 'package:batta/widget/widget_board.dart';
 import 'package:flutter/material.dart';
 
-class BoardScreen extends StatefulWidget {
+class BoardScreen extends StatelessWidget {
   final String type;
 
   const BoardScreen({
@@ -9,11 +9,6 @@ class BoardScreen extends StatefulWidget {
     required this.type,
   });
 
-  @override
-  State<BoardScreen> createState() => _BoardScreenState();
-}
-
-class _BoardScreenState extends State<BoardScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,8 +19,8 @@ class _BoardScreenState extends State<BoardScreen> {
           itemBuilder: (context, index) {
             return Board(
               boardNum: "$index",
-              type: widget.type,
-              title: "${widget.type} title${index + 1}",
+              type: type,
+              title: "$type title${index + 1}",
               content:
                   "글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용",
               username: "익명",
