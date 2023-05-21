@@ -18,7 +18,9 @@ class _NavbarScreenState extends State<NavbarScreen> {
   final List<Widget> _pages = [
     const HomeScreen(),
     const BoardListScreen(),
-    const NoticeScreen(),
+    const NoticeScreen(
+      type: '',
+    ),
     const SettingScreen(),
   ];
   @override
