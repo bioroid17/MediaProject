@@ -1,6 +1,8 @@
 import 'package:batta/screen/screen_changeemail.dart';
+import 'package:batta/screen/screen_changeimage.dart';
 import 'package:batta/screen/screen_changenick.dart';
 import 'package:batta/screen/screen_changepassword.dart';
+import 'package:batta/screen/screen_deleteaccount.dart';
 import 'package:flutter/material.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -152,13 +154,13 @@ class SettingScreen extends StatelessWidget {
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //     builder: (context) =>
-                                      //         const ChangeEmailScreen(),
-                                      //   ),
-                                      // );
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ChangeImageScreen(),
+                                        ),
+                                      );
                                     },
                                     child: const Text("변경"),
                                   ),
@@ -249,12 +251,12 @@ class SettingScreen extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const ChangeEmailScreen(),
-                          //   ),
-                          // );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const DeleteAccountScreen(),
+                            ),
+                          );
                         },
                         child: const Text(
                           "회원 탈퇴",

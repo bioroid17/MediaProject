@@ -17,7 +17,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('이메일 변경'),
+          title: const Text('비밀번호 변경'),
           centerTitle: true,
         ),
         body: Column(
