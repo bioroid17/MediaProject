@@ -48,3 +48,16 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Google Maps Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MapScreen(), // MapScreen 호출
+    );
+  }
+}
