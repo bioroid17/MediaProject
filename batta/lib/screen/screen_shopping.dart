@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(HomeShoppingApp());
+  runApp(const HomeShopping());
 }
 
-class HomeShoppingApp extends StatelessWidget {
+class HomeShopping extends StatelessWidget {
+  const HomeShopping({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -12,21 +14,23 @@ class HomeShoppingApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Shopping'),
+        title: const Text('야구 장비 Shopping'),
       ),
       body: Column(
         children: [
-          BannerWidget(),
+          const BannerWidget(),
           Expanded(
             child: ProductListWidget(),
           ),
@@ -37,12 +41,14 @@ class HomeScreen extends StatelessWidget {
 }
 
 class BannerWidget extends StatelessWidget {
+  const BannerWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 200,
       color: Colors.blue,
-      child: Center(
+      child: const Center(
         child: Text(
           'Banner',
           style: TextStyle(
@@ -55,27 +61,15 @@ class BannerWidget extends StatelessWidget {
   }
 }
 
-class ProductListWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 10, // 상품 개수에 맞게 수정
-      itemBuilder: (BuildContext context, int index) {
-        return ProductItemWidget(
-          name: 'Product ${index + 1}',
-          price: 10000,
-          // 다른 상품 정보도 추가로 넘겨줄 수 있음
-        );
-      },
-    );
-  }
-}
-
 class ProductItemWidget extends StatelessWidget {
   final String name;
   final int price;
 
-  ProductItemWidget({required this.name, required this.price});
+  const ProductItemWidget({
+    super.key,
+    required this.name,
+    required this.price,
+  });
 
   @override
   Widget build(BuildContext context) {
