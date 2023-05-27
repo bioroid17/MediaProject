@@ -15,15 +15,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String passwordCheck = "";
   String nickname = "";
   bool nicknameCheck = false;
+  String zonecode = "";
   String address = "";
-  String detailAdress = "";
+  String detailAddress = "";
 
   // 선택: 프로필 사진, 전화번호, 이메일
-  String? phone1;
-  String? phone2;
-  String? phone3;
-  String? email1;
-  String? email2;
+  String? phone = "010";
+  String? email;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +67,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           width: width * 0.38,
                           child: TextField(
                             decoration: const InputDecoration(
-                              labelText: '아이디(필수 입력)',
+                              labelText: '아이디(필수)',
                             ),
                             keyboardType: TextInputType.text,
                             maxLength: 16,
@@ -124,7 +122,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       child: TextField(
                         decoration: const InputDecoration(
-                          labelText: '비밀번호(필수 입력)',
+                          labelText: '비밀번호(필수)',
                         ),
                         keyboardType: TextInputType.text,
                         obscureText: true,
@@ -142,7 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       child: TextField(
                         decoration: const InputDecoration(
-                          labelText: '비밀번호 확인(필수 입력)',
+                          labelText: '비밀번호 확인(필수)',
                         ),
                         keyboardType: TextInputType.text,
                         obscureText: true,
@@ -160,7 +158,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           width: width * 0.38,
                           child: TextField(
                             decoration: const InputDecoration(
-                              labelText: '닉네임(필수 입력)',
+                              labelText: '닉네임(필수)',
                             ),
                             keyboardType: TextInputType.text,
                             maxLength: 16,
@@ -209,8 +207,130 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ],
                     ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: width * 0.32,
+                          child: TextField(
+                            decoration: const InputDecoration(
+                              labelText: '우편번호(필수)',
+                            ),
+                            keyboardType: TextInputType.text,
+                            readOnly: true,
+                            onChanged: (value) {
+                              setState(() {
+                                zonecode = value;
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: width * 0.05,
+                        ),
+                        OutlinedButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: true,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: const Text("우편번호 찾기"),
+                                  content: const SingleChildScrollView(
+                                    child: ListBody(
+                                      children: [
+                                        Text("아직 구현되지 않음"),
+                                      ],
+                                    ),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        setState(() {
+                                          usernameCheck = true;
+                                        });
+                                      },
+                                      child: const Text("확인"),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: const Text(
+                            "우편번호 찾기",
+                          ),
+                        ),
+                      ],
+                    ),
                     Container(
-                      padding: EdgeInsets.only(bottom: height * 0.01),
+                      padding: EdgeInsets.symmetric(
+                        vertical: height * 0.02,
+                      ),
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          labelText: '주소(필수)',
+                          hintText: "우편번호 찾기 버튼으로 주소 찾기",
+                        ),
+                        keyboardType: TextInputType.text,
+                        readOnly: true,
+                        onChanged: (value) {
+                          setState(() {
+                            address = value;
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: height * 0.02,
+                      ),
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          labelText: '상세주소(필수)',
+                        ),
+                        keyboardType: TextInputType.text,
+                        onChanged: (value) {
+                          setState(() {
+                            detailAddress = value;
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: height * 0.02,
+                      ),
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          labelText: '이메일',
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        onChanged: (value) {
+                          setState(() {
+                            email = value;
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: height * 0.02,
+                      ),
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          labelText: '전화번호',
+                        ),
+                        keyboardType: TextInputType.phone,
+                        onChanged: (value) {
+                          setState(() {
+                            phone = value;
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: height * 0.02),
                       child: ButtonTheme(
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
