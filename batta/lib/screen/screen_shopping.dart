@@ -20,7 +20,7 @@ class ShoppingPage extends StatefulWidget {
   const ShoppingPage({super.key});
 
   @override
-  _ShoppingPageState createState() => _ShoppingPageState();
+  State<ShoppingPage> createState() => _ShoppingPageState();
 }
 
 class _ShoppingPageState extends State<ShoppingPage> {

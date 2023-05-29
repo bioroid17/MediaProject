@@ -4,7 +4,7 @@ class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
 
   @override
-  _LandingPageState createState() => _LandingPageState();
+  State<LandingPage> createState() => _LandingPageState();
 }
 
 class _LandingPageState extends State<LandingPage> {
@@ -14,7 +14,7 @@ class _LandingPageState extends State<LandingPage> {
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        child: Image.asset('assets/image/splash.png'),
+        child: Image.asset('assets/images/splash.png'),
       ),
     );
   }
