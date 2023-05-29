@@ -1,4 +1,7 @@
+import 'package:batta/screen/screen_daumpostcodesearch.dart';
+import 'package:daum_postcode_search/data_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -20,8 +23,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String detailAddress = "";
 
   // 선택: 프로필 사진, 전화번호, 이메일
-  String? phone = "010";
+  String? profileImgDir;
+  String? phone;
   String? email;
+
+  DataModel? dataModel;
 
   @override
   Widget build(BuildContext context) {
@@ -229,31 +235,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         OutlinedButton(
                           onPressed: () {
-                            showDialog(
-                              context: context,
-                              barrierDismissible: true,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: const Text("우편번호 찾기"),
-                                  content: const SingleChildScrollView(
-                                    child: ListBody(
-                                      children: [
-                                        Text("아직 구현되지 않음"),
-                                      ],
-                                    ),
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                        setState(() {
-                                          usernameCheck = true;
-                                        });
-                                      },
-                                      child: const Text("확인"),
-                                    ),
-                                  ],
-                                );
+                            HapticFeedback.mediumImpact();
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return const DaumPostcodeSearchScreen();
+                                },
+                              ),
+                            ).then(
+                              (value) {
+                                if (value != null) {
+                                  setState(
+                                    () {
+                                      dataModel = value;
+                                    },
+                                  );
+                                }
                               },
                             );
                           },
