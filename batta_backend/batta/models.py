@@ -16,7 +16,7 @@ class Member(models.Model):
 class Board(models.Model):
     boardNum = models.BigAutoField(verbose_name="글 번호", primary_key=True)
     username = models.ForeignKey("Member", on_delete=models.CASCADE, null=False, db_column="username")  # 작성자
-    boardType = models.CharField(verbose_name="게시판 타입", null=False)
+    boardType = models.CharField(verbose_name="게시판 타입", max_length=10, null=False)
     content = models.TextField(null=False, verbose_name="글 내용")
     writeDate = models.DateTimeField(auto_now_add=True, verbose_name="작성일시", null=False, blank=True)
     modifyDate = models.DateTimeField(auto_now=True, verbose_name="최근 수정일시", null=False, blank=True)

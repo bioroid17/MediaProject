@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-void main() {
-  runApp(ShoppingApp());
-}
-
 class ShoppingApp extends StatelessWidget {
   const ShoppingApp({super.key});
 
@@ -15,7 +11,7 @@ class ShoppingApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ShoppingPage(),
+      home: const ShoppingPage(),
     );
   }
 }
@@ -51,7 +47,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => WebViewPage(),
+                  builder: (context) => const WebViewPage(),
                   settings: const RouteSettings(
                     arguments:
                         'https://search.shopping.naver.com/search/all?frm=NVSHATC&origQuery=%EC%95%BC%EA%B5%AC%EC%9E%A5%EB%B9%84&pagingIndex=1&pagingSize=40&productSet=total&query=%EC%95%BC%EA%B5%AC%EC%9E%A5%EB%B9%84&sort=review&timestamp=&viewType=list', // 네이버 쇼핑 URL

@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 @api_view(["POST"])
-def registerMember(request):
+def register(request):
     dto = Member(
         username=request.POST.get('username'),
         password=request.POST.get('password'),
