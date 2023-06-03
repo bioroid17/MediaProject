@@ -5,6 +5,8 @@ from .serializers import MemberSerializer, BoardSerializer, CommentSerializer
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
 
+import json
+
 # Create your views here.
 @api_view(["POST"])
 @csrf_exempt
@@ -20,7 +22,7 @@ def register(request):
         phone=request.POST.get('phone'),
     )
     dto.save()
-    return Response(True)
+    return Response()
 
 
 @api_view(["POST"])
@@ -46,8 +48,9 @@ def login(request):
 @api_view(["POST"])
 @csrf_exempt
 def writeboard(request):
+    username = request.POST["username"],
     dto = Board(
-        username = request.POST["username"],
+        username = Member.objects.get(username=username),
         boardType = request.POST["boardType"],
         title = request.POST["title"],
         content = request.POST["content"],
@@ -58,9 +61,11 @@ def writeboard(request):
 @api_view(["POST"])
 @csrf_exempt
 def writecomment(request):
+    username = request.POST["username"],
+    boardNum = request.POST["boardNum"],
     dto = Comment(
-        username = request.POST["username"],
-        boardNum = request.POST["boardNum"],
+        username = Member.objects.get(username=username),
+        boardNum = Board.objects.get(boardNum=boardNum),
         content = request.POST["content"],
     )
     dto.save()
