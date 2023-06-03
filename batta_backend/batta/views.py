@@ -48,7 +48,7 @@ def login(request):
 @api_view(["POST"])
 @csrf_exempt
 def writeboard(request):
-    username = request.POST["username"],
+    username = request.POST["username"]
     dto = Board(
         username = Member.objects.get(username=username),
         boardType = request.POST["boardType"],

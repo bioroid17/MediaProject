@@ -1,6 +1,7 @@
 import 'package:batta/model/model_login.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 enum BoardType {
   free("자유게시판", "free"),
@@ -23,69 +24,153 @@ class _WriteBoardScreenState extends State<WriteBoardScreen> {
   BoardType chosenValue = BoardType.free;
   String chosenType = BoardType.free.engType;
 
-  String username = "";
   String title = "";
   String content = "";
 
   @override
   Widget build(BuildContext context) {
-    doWrite() {}
-    username = Provider.of<LoginModel>(context).getUsername();
+    Size screenSize = MediaQuery.of(context).size;
+    double width = screenSize.width;
+    double height = screenSize.height;
+
+    String username = Provider.of<LoginModel>(context).getUsername();
+
+    doWriteBoard() async {
+      final url = Uri.parse("http://10.0.2.2:8000/batta/writeboard/");
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: <String, String>{
+          "username": username,
+          "boardType": chosenType,
+          "title": title,
+          "content": content,
+        },
+      );
+      if (response.statusCode == 200) {
+      } else {
+        throw Exception(response.statusCode.toString());
+      }
+    }
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: const Text('글 쓰기'),
           centerTitle: true,
         ),
-        body: Column(
-          children: [
-            DropdownButton(
-              isExpanded: true,
-              value: chosenValue,
-              items: boards.map(
-                (BoardType value) {
-                  return DropdownMenuItem<BoardType>(
-                    value: value,
-                    child: Text(value.korString),
-                  );
-                },
-              ).toList(),
-              onChanged: (value) {
-                setState(() {
-                  chosenValue = value!;
-                  chosenType = value.engType;
-                });
-              },
+        body: Center(
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: width * 0.05,
+              vertical: height * 0.02,
             ),
-            TextField(
-              decoration: const InputDecoration(
-                labelText: '글 제목',
-              ),
-              maxLines: null,
-              keyboardType: TextInputType.text,
-              onChanged: (value) {
-                setState(() {
-                  title = value;
-                });
-              },
+            child: Column(
+              children: [
+                DropdownButton(
+                  isExpanded: true,
+                  value: chosenValue,
+                  items: boards.map(
+                    (BoardType value) {
+                      return DropdownMenuItem<BoardType>(
+                        value: value,
+                        child: Text(value.korString),
+                      );
+                    },
+                  ).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      chosenValue = value!;
+                      chosenType = value.engType;
+                    });
+                  },
+                ),
+                TextField(
+                  decoration: const InputDecoration(
+                    labelText: '글 제목',
+                  ),
+                  maxLines: null,
+                  keyboardType: TextInputType.text,
+                  onChanged: (value) {
+                    setState(() {
+                      title = value;
+                    });
+                  },
+                ),
+                TextField(
+                  decoration: const InputDecoration(
+                    labelText: '글 내용',
+                  ),
+                  maxLines: null,
+                  keyboardType: TextInputType.text,
+                  onChanged: (value) {
+                    setState(() {
+                      content = value;
+                    });
+                  },
+                ),
+              ],
             ),
-            TextField(
-              decoration: const InputDecoration(
-                labelText: '글 내용',
-              ),
-              maxLines: null,
-              keyboardType: TextInputType.text,
-              onChanged: (value) {
-                setState(() {
-                  content = value;
-                });
-              },
-            ),
-          ],
+          ),
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            Navigator.of(context).pop();
+            if (title.isEmpty) {
+              showDialog(
+                context: context,
+                barrierDismissible: true,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text("글쓰기 오류"),
+                    content: const SingleChildScrollView(
+                      child: ListBody(
+                        children: [
+                          Text("제목을 작성해 주세요"),
+                        ],
+                      ),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text("확인"),
+                      ),
+                    ],
+                  );
+                },
+              );
+            } else if (content.isEmpty) {
+              showDialog(
+                context: context,
+                barrierDismissible: true,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text("글쓰기 오류"),
+                    content: const SingleChildScrollView(
+                      child: ListBody(
+                        children: [
+                          Text("내용을 작성해 주세요"),
+                        ],
+                      ),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text("확인"),
+                      ),
+                    ],
+                  );
+                },
+              );
+            } else {
+              doWriteBoard();
+              Navigator.of(context).pop();
+            }
           },
           label: const Text("작성 완료"),
         ),
