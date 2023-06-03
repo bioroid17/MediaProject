@@ -1,20 +1,9 @@
-import 'package:batta/model/model_login.dart';
 import 'package:batta/screen/screen_login.dart';
 import 'package:batta/service/flutter_local_notification.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-            create: (BuildContext context) => LoginModel(username: '')),
-      ],
-      child: const MyApp(),
-    ),
-  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -23,14 +12,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'BATTA',
-      home: AnimatedSplashScreen(
-        splash: Image.asset('assets/images/splash.png'),
-        nextScreen: const LoginScreen(),
-        splashTransition: SplashTransition.fadeTransition,
-        splashIconSize: double.infinity,
-      ),
+      home: LoginScreen(),
     );
   }
 }
