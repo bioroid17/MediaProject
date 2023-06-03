@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 void main() {
+  // 로그인 정보 상태 관리를 위해 MultiProvider 사용
   runApp(
     MultiProvider(
       providers: [
