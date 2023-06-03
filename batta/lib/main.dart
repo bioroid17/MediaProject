@@ -23,23 +23,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'BATTA',
-      home: LoginScreen(),
+      home: AnimatedSplashScreen(
+        splash: Image.asset('assets/images/splash.png'),
+        nextScreen: const LoginScreen(),
+        splashTransition: SplashTransition.fadeTransition,
+      ),
     );
   }
-}
-
-@override
-Widget build(BuildContext context) {
-  return MaterialApp(
-    title: 'BATTA',
-    home: AnimatedSplashScreen(
-      splash: Image.asset('assets/image/splash.png'),
-      nextScreen: const LoginScreen(),
-      splashTransition: SplashTransition.fadeTransition,
-    ),
-  );
 }
 
 class HomePage extends StatefulWidget {
