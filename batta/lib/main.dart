@@ -1,9 +1,19 @@
+import 'package:batta/model/model_login.dart';
 import 'package:batta/screen/screen_login.dart';
 import 'package:batta/service/flutter_local_notification.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+            create: (BuildContext context) => LoginModel(username: '')),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
