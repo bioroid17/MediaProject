@@ -27,10 +27,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'BATTA',
       home: AnimatedSplashScreen(
-        splash: Image.asset('assets/images/splash.png'),
+        splash: Image.asset('assets/images/BATTA_icon.png'),
         nextScreen: const LoginScreen(),
         splashTransition: SplashTransition.fadeTransition,
-        splashIconSize: double.infinity,
+        backgroundColor: const Color.fromARGB(255, 13, 32, 101),
       ),
     );
   }
