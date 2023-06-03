@@ -3,6 +3,7 @@ import 'package:batta/screen/screen_login.dart';
 import 'package:batta/service/flutter_local_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 void main() {
   // 로그인 정보 상태 관리를 위해 MultiProvider 사용
@@ -23,9 +24,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'BATTA',
-      home: LoginScreen(),
+      home: AnimatedSplashScreen(
+        splash: Image.asset('assets/images/splash.png'),
+        nextScreen: const LoginScreen(),
+        splashTransition: SplashTransition.fadeTransition,
+        splashIconSize: double.infinity,
+      ),
     );
   }
 }
