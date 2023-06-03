@@ -34,7 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   width: width * 0.85,
-                  height: height * 0.3,
                   padding: EdgeInsets.symmetric(
                     vertical: height * 0.03,
                     horizontal: width * 0.03,
@@ -79,7 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   width: width * 0.85,
-                  height: height * 0.3,
                   padding: EdgeInsets.symmetric(
                     vertical: height * 0.03,
                     horizontal: width * 0.03,
