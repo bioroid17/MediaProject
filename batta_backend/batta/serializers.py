@@ -18,5 +18,5 @@ class BoardSerializer(serializers.ModelSerializer):
 class MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Member
-        fields = ('username', 'password', 'nickname', 'zonecode', 'address', 'detailAddress',
+        fields = ('username', 'password', 'nickname', 'zonecode', 'address',
                   'email', 'phone', 'registerDate', 'modifyDate')

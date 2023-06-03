@@ -7,9 +7,9 @@ class Member(models.Model):
     nickname = models.CharField(max_length=16, verbose_name="닉네임", null=False)
     zonecode = models.CharField(max_length=5, verbose_name="우편번호", null=False)
     address = models.TextField(verbose_name="주소", null=False)
-    detailAddress = models.TextField(verbose_name="상세주소", null=False)
     email = models.TextField(verbose_name="이메일", null=True)
     phone = models.CharField(max_length=13, verbose_name="전화번호", null=True)
+    profileImage = models.ImageField(verbose_name="썸네일", null=True, upload_to="profile")
     registerDate = models.DateTimeField(auto_now_add=True, verbose_name="가입일", null=False, blank=True)
     modifyDate = models.DateTimeField(auto_now=True, verbose_name="최근 수정일", null=False, blank=True)
 
@@ -17,6 +17,7 @@ class Board(models.Model):
     boardNum = models.BigAutoField(verbose_name="글 번호", primary_key=True)
     username = models.ForeignKey("Member", on_delete=models.CASCADE, null=False, db_column="username")  # 작성자
     boardType = models.CharField(verbose_name="게시판 타입", max_length=10, null=False)
+    title = models.TextField(null=False, verbose_name="글 제목")
     content = models.TextField(null=False, verbose_name="글 내용")
     writeDate = models.DateTimeField(auto_now_add=True, verbose_name="작성일시", null=False, blank=True)
     modifyDate = models.DateTimeField(auto_now=True, verbose_name="최근 수정일시", null=False, blank=True)
