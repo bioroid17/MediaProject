@@ -1,4 +1,5 @@
 import 'package:batta/screen/screen_board.dart';
+import 'package:batta/screen/screen_writeboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +44,14 @@ class BoardListScreen extends StatelessWidget {
             ],
           ),
           floatingActionButton: FloatingActionButton.extended(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const WriteBoardScreen(),
+                ),
+              );
+            },
             icon: const Icon(CupertinoIcons.pencil_circle),
             label: const Text("글 쓰기"),
           ),

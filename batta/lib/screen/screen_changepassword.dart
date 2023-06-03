@@ -25,11 +25,37 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             Container(
               padding: EdgeInsets.symmetric(
                 horizontal: width * 0.1,
-                vertical: height * 0.05,
+                vertical: height * 0.02,
               ),
               child: const TextField(
                 decoration: InputDecoration(
-                  labelText: '비밀번호',
+                  labelText: '현재 비밀번호',
+                ),
+                keyboardType: TextInputType.text,
+                obscureText: true,
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: width * 0.1,
+                vertical: height * 0.02,
+              ),
+              child: const TextField(
+                decoration: InputDecoration(
+                  labelText: '새 비밀번호',
+                ),
+                keyboardType: TextInputType.text,
+                obscureText: true,
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: width * 0.1,
+                vertical: height * 0.02,
+              ),
+              child: const TextField(
+                decoration: InputDecoration(
+                  labelText: '새 비밀번호 확인',
                 ),
                 keyboardType: TextInputType.text,
                 obscureText: true,

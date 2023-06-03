@@ -1,7 +1,11 @@
+import 'package:batta/model/model_daumpostcode.dart';
+import 'package:batta/model/model_member.dart';
 import 'package:batta/screen/screen_daumpostcodesearch.dart';
-import 'package:daum_postcode_search/data_model.dart';
+import 'package:batta/screen/screen_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -23,17 +27,48 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String detailAddress = "";
 
   // 선택: 프로필 사진, 전화번호, 이메일
-  String? profileImgDir;
-  String? phone;
-  String? email;
+  final ImagePicker imagePicker = ImagePicker();
+  XFile? image;
+  String phone = "";
+  String email = "";
 
-  DataModel? dataModel;
+  DaumPostModel? dataModel;
 
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     double width = screenSize.width;
     double height = screenSize.height;
+
+    doRegister(MemberModel member) async {
+      setState(() {});
+      Map<String, String> body = {
+        'username': member.username,
+        'password': member.password,
+        'nickname': member.nickname,
+        'zonecode': member.zonecode,
+        'address': member.address,
+      };
+      if (member.phone.isNotEmpty) {
+        body['phone'] = member.phone;
+      }
+      if (member.email.isNotEmpty) {
+        body['email'] = member.email;
+      }
+      final url = Uri.parse("http://10.0.2.2:8000/batta/register/");
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: body,
+      );
+      if (response.statusCode == 200) {
+        setState(() {});
+      } else {
+        throw Exception(response.statusCode.toString());
+      }
+    }
 
     return SafeArea(
       child: Scaffold(
@@ -218,16 +253,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(
                           width: width * 0.32,
                           child: TextField(
+                            controller: TextEditingController(text: zonecode),
                             decoration: const InputDecoration(
                               labelText: '우편번호(필수)',
                             ),
                             keyboardType: TextInputType.text,
                             readOnly: true,
-                            onChanged: (value) {
-                              setState(() {
-                                zonecode = value;
-                              });
-                            },
                           ),
                         ),
                         SizedBox(
@@ -248,6 +279,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   setState(
                                     () {
                                       dataModel = value;
+                                      zonecode = dataModel!.zonecode;
+                                      address = dataModel!.address;
                                     },
                                   );
                                 }
@@ -265,33 +298,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         vertical: height * 0.02,
                       ),
                       child: TextField(
+                        controller: TextEditingController(text: address),
                         decoration: const InputDecoration(
                           labelText: '주소(필수)',
                           hintText: "우편번호 찾기 버튼으로 주소 찾기",
                         ),
                         keyboardType: TextInputType.text,
                         readOnly: true,
-                        onChanged: (value) {
-                          setState(() {
-                            address = value;
-                          });
-                        },
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        vertical: height * 0.02,
-                      ),
-                      child: TextField(
-                        decoration: const InputDecoration(
-                          labelText: '상세주소(필수)',
-                        ),
-                        keyboardType: TextInputType.text,
-                        onChanged: (value) {
-                          setState(() {
-                            detailAddress = value;
-                          });
-                        },
                       ),
                     ),
                     Container(
@@ -326,6 +339,48 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                     ),
+                    // image != null
+                    //     ? SizedBox(
+                    //         width: 300,
+                    //         height: 300,
+                    //         child: Image.file(
+                    //             File(image!.path)), //가져온 이미지를 화면에 띄워주는 코드
+                    //       )
+                    //     : Container(
+                    //         width: 300,
+                    //         height: 300,
+                    //         color: Colors.grey,
+                    //       ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     ElevatedButton(
+                    //       onPressed: () {
+                    //         image = await imagePicker.pickImage(
+                    //           //이미지를 선택
+                    //           source: ImageSource.camera, //위치는 카메라
+                    //           maxHeight: 75,
+                    //           maxWidth: 75,
+                    //           imageQuality: 30, // 이미지 크기 압축을 위해 퀄리티를 30으로 낮춤.
+                    //         );
+                    //       },
+                    //       child: const Text("카메라"),
+                    //     ),
+                    //     const SizedBox(width: 30),
+                    //     ElevatedButton(
+                    //       onPressed: () {
+                    //         imagePicker.pickImage(
+                    //           //이미지를 선택
+                    //           source: ImageSource.gallery, //위치는 갤러리
+                    //           maxHeight: 75,
+                    //           maxWidth: 75,
+                    //           imageQuality: 30, // 이미지 크기 압축을 위해 퀄리티를 30으로 낮춤.
+                    //         );
+                    //       },
+                    //       child: const Text("갤러리"),
+                    //     ),
+                    //   ],
+                    // ),
                     Container(
                       padding: EdgeInsets.symmetric(vertical: height * 0.02),
                       child: ButtonTheme(
@@ -341,12 +396,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const RegisterScreen(),
+                            // 이후 유효성 검사 코드 추가할 것
+                            doRegister(
+                              MemberModel.fromMap(
+                                {
+                                  'username': username,
+                                  'password': password,
+                                  'nickname': nickname,
+                                  'zonecode': zonecode,
+                                  'address': address,
+                                  'image': image.toString(),
+                                  'phone': phone,
+                                  'email': email,
+                                },
                               ),
-                            );
+                            ).whenComplete(() {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginScreen(),
+                                ),
+                              );
+                            });
                           },
                           child: const Text(
                             '회원가입',
@@ -362,4 +433,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+
+  //이미지를 가져오는 함수
+  // Future getImage(ImageSource imageSource) async {
+  //   //pickedFile에 ImagePicker로 가져온 이미지가 담긴다.
+  //   final XFile? pickedFile = await imagePicker.pickImage(source: imageSource);
+  //   if (pickedFile != null) {
+  //     setState(() {
+  //       image = XFile(pickedFile.path); //가져온 이미지를 _image에 저장
+  //     });
+  //   }
+  // }
 }
