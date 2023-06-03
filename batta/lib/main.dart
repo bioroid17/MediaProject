@@ -3,6 +3,7 @@ import 'package:batta/screen/screen_login.dart';
 import 'package:batta/service/flutter_local_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 void main() {
   runApp(
@@ -27,6 +28,18 @@ class MyApp extends StatelessWidget {
       home: LoginScreen(),
     );
   }
+}
+
+@override
+Widget build(BuildContext context) {
+  return MaterialApp(
+    title: 'BATTA',
+    home: AnimatedSplashScreen(
+      splash: Image.asset('assets/image/splash.png'),
+      nextScreen: const LoginScreen(),
+      splashTransition: SplashTransition.fadeTransition,
+    ),
+  );
 }
 
 class HomePage extends StatefulWidget {

@@ -17,6 +17,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 13, 32, 101),
           title: const Text('회원 탈퇴'),
           centerTitle: true,
         ),

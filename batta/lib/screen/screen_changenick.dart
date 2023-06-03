@@ -17,6 +17,7 @@ class _ChangeNickScreenState extends State<ChangeNickScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 13, 32, 101),
           title: const Text('이메일 변경'),
           centerTitle: true,
         ),
@@ -37,7 +38,7 @@ class _ChangeNickScreenState extends State<ChangeNickScreen> {
             ButtonTheme(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF0D2065),
+                  backgroundColor: const Color.fromARGB(255, 13, 32, 101),
                   minimumSize: Size(
                     width * 0.3,
                     height * 0.05,

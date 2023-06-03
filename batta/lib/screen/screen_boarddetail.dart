@@ -28,6 +28,7 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 13, 32, 101),
           title: Text(widget.title),
           centerTitle: true,
         ),

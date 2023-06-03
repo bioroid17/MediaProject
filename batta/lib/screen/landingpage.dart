@@ -1,4 +1,6 @@
+import 'package:batta/screen/screen_login.dart';
 import 'package:flutter/material.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -10,11 +12,12 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Image.asset('assets/images/splash.png'),
+    return MaterialApp(
+      title: 'BATTA',
+      home: AnimatedSplashScreen(
+        splash: Image.asset('assets/image/splash.png'),
+        nextScreen: const LoginScreen(),
+        splashTransition: SplashTransition.fadeTransition,
       ),
     );
   }

@@ -17,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 13, 32, 101),
           title: const Text('BATTA 홈'),
           centerTitle: true,
         ),

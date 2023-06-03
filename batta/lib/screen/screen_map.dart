@@ -25,6 +25,7 @@ class _MapScreenState extends State<MapScreen> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 13, 32, 101),
           title: const Text('동네 지도'),
         ),
         body: GoogleMap(

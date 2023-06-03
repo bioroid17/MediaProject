@@ -16,7 +16,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(8.0),
-        color: const Color.fromARGB(255, 255, 255, 255),
+        color: const Color(0xFFEFECE5),
         child: ListView.separated(
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) {
