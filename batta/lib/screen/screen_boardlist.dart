@@ -9,9 +9,10 @@ class BoardListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: DefaultTabController(
-        length: 3,
+        length: 4,
         child: Scaffold(
           appBar: AppBar(
+            backgroundColor: const Color.fromARGB(255, 13, 32, 101),
             title: const Text('BATTA 게시판'),
             centerTitle: true,
             bottom: const TabBar(
@@ -21,6 +22,9 @@ class BoardListScreen extends StatelessWidget {
                 ),
                 Tab(
                   text: "모임게시판",
+                ),
+                Tab(
+                  text: "모임 지도",
                 ),
                 Tab(
                   text: "쇼핑",
@@ -37,6 +41,7 @@ class BoardListScreen extends StatelessWidget {
               BoardScreen(
                 type: "circle",
               ),
+              BoardScreen(type: "map"),
               BoardScreen(
                 type: "shop",
               ),
@@ -44,6 +49,7 @@ class BoardListScreen extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton.extended(
             onPressed: () {},
+            backgroundColor: const Color.fromARGB(255, 13, 32, 101),
             icon: const Icon(CupertinoIcons.pencil_circle),
             label: const Text("글 쓰기"),
           ),

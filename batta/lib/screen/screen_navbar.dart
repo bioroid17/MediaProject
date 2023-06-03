@@ -33,7 +33,9 @@ class _NavbarScreenState extends State<NavbarScreen> {
         // BottomNavigationBar 위젯
         bottomNavigationBar: BottomNavigationBar(
           // bottomNavigationBar item이 4개 이상일 경우
-          type: BottomNavigationBarType.fixed,
+          selectedItemColor: const Color.fromARGB(255, 13, 32, 101), // 선택된 요소 색
+          unselectedItemColor: Colors.grey, // 선택되지 않은 요소 색
+          type: BottomNavigationBarType.shifting,
 
           // 클릭 이벤트
           onTap: _onItemTapped,

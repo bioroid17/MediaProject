@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:batta/widget/widget_board.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class ShoppingApp extends StatelessWidget {

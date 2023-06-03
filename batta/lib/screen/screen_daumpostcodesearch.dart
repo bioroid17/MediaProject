@@ -33,6 +33,7 @@ class _DaumPostcodeSearchScreenState extends State<DaumPostcodeSearchScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(title: const Text("다음 주소 검색")),
+        backgroundColor: const Color.fromARGB(255, 13, 32, 101),
         body: Stack(
           children: [
             InAppWebView(

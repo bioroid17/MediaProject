@@ -42,6 +42,7 @@ dependencies:
   get: ^4.6.5
   daum_postcode_search: ^0.0.2
   flutter_inappwebview: ^5.7.2+3
+  animated_splash_screen: ^1.0.1+2
 
 dev_dependencies:
   flutter_test:

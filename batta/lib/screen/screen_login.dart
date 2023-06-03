@@ -19,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 13, 32, 101),
           title: const Text('BATTA 로그인'),
           centerTitle: true,
         ),
