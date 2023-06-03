@@ -5,12 +5,11 @@ class MemberModel {
   String nickname;
   String zonecode;
   String address;
-  String detailAddress;
 
   // 선택: 프로필 사진, 전화번호, 이메일
-  String? profileImgDir;
-  String? phone;
-  String? email;
+  String? image;
+  String phone;
+  String email;
 
   MemberModel.fromMap(Map<String, dynamic> map)
       : username = map['username'],
@@ -18,8 +17,7 @@ class MemberModel {
         nickname = map['nickname'],
         zonecode = map['zonecode'],
         address = map['address'],
-        detailAddress = map['detailAddress'],
-        profileImgDir = map['profileImgDir'],
+        image = map['image'],
         phone = map['phone'],
         email = map['email'];
 
@@ -29,8 +27,7 @@ class MemberModel {
         nickname = json['nickname'],
         zonecode = json['zonecode'],
         address = json['address'],
-        detailAddress = json['detailAddress'],
-        profileImgDir = json['profileImgDir'],
+        image = json['image'],
         phone = json['phone'],
         email = json['email'];
 }
