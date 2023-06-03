@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
         splash: Image.asset('assets/images/splash.png'),
         nextScreen: const LoginScreen(),
         splashTransition: SplashTransition.fadeTransition,
+        splashIconSize: double.infinity,
       ),
     );
   }
