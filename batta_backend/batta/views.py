@@ -41,3 +41,27 @@ def login(request):
         # 아이디 없음
         result = -1
     return Response(result)
+
+
+@api_view(["POST"])
+@csrf_exempt
+def writeboard(request):
+    dto = Board(
+        username = request.POST["username"],
+        boardType = request.POST["boardType"],
+        title = request.POST["title"],
+        content = request.POST["content"],
+    )
+    dto.save()
+    return Response()
+
+@api_view(["POST"])
+@csrf_exempt
+def writecomment(request):
+    dto = Comment(
+        username = request.POST["username"],
+        boardNum = request.POST["boardNum"],
+        content = request.POST["content"],
+    )
+    dto.save()
+    return Response()
