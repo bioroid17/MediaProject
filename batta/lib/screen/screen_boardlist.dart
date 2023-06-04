@@ -44,9 +44,6 @@ class BoardListScreen extends StatelessWidget {
                   boardType: "circle",
                 ),
                 BoardScreen(
-                  boardType: "map",
-                ),
-                BoardScreen(
                   boardType: "shop",
                 ),
               ],
