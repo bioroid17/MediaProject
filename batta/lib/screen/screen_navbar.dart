@@ -1,5 +1,6 @@
 import 'package:batta/screen/screen_boardlist.dart';
 import 'package:batta/screen/screen_home.dart';
+import 'package:batta/screen/screen_map.dart';
 import 'package:batta/screen/screen_notice.dart';
 import 'package:batta/screen/screen_setting.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
   final List<Widget> _pages = [
     const HomeScreen(),
     const BoardListScreen(),
+    const MapScreen(),
     const NoticeScreen(
       type: '',
     ),
@@ -50,6 +52,10 @@ class _NavbarScreenState extends State<NavbarScreen> {
             BottomNavigationBarItem(
               icon: Icon(Icons.list_alt_outlined),
               label: '게시판',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.map_outlined),
+              label: '지도',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.notifications),

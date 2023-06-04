@@ -73,10 +73,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 13, 32, 101),
           title: const Text('BATTA 회원가입'),
           centerTitle: true,
         ),
-        backgroundColor: const Color(0xFFEFECE5),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
           child: Center(
             child: Container(
@@ -108,8 +109,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           width: width * 0.38,
                           child: TextField(
                             decoration: const InputDecoration(
-                              labelText: '아이디(필수)',
-                            ),
+                                labelText: '아이디(필수)',
+                                floatingLabelStyle:
+                                    TextStyle(color: Color(0xFF0D2065))),
                             keyboardType: TextInputType.text,
                             maxLength: 16,
                             onChanged: (value) {
