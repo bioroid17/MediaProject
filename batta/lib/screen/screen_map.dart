@@ -22,8 +22,8 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return SafeArea(
+      child: Scaffold(
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 13, 32, 101),
           title: const Text('동네 지도'),

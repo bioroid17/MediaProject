@@ -7,6 +7,10 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
+ <meta-data
+              android:name="com.google.android.geo.API_KEY"
+              android:value="AIzaSyAf69evtPshuH3pQmFPWwryLln5KJVdsIE"/>
+  
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -24,9 +28,7 @@
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"/>
-            <meta-data
-              android:name="com.google.android.geo.API_KEY"
-              android:value="AIzaSyAf69evtPshuH3pQmFPWwryLln5KJVdsIE"/>
+           
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
