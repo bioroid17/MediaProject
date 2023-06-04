@@ -10,7 +10,7 @@ class BoardListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: DefaultTabController(
-        length: 4,
+        length: 3,
         child: Center(
           child: Scaffold(
             appBar: AppBar(
@@ -27,9 +27,6 @@ class BoardListScreen extends StatelessWidget {
                   ),
                   Tab(
                     text: "모임게시판",
-                  ),
-                  Tab(
-                    text: "모임 지도",
                   ),
                   Tab(
                     text: "쇼핑",
