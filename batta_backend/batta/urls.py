@@ -1,9 +1,11 @@
 from django.urls.conf import path
-from .views import register, login, writeboard, writecomment
+from . import views
 
 urlpatterns = [
-    path("register/", register),
-    path("login/", login),
-    path("writeboard/", writeboard),
-    path("writecomment/", writecomment),
+    path("register/", views.register),
+    path("login/", views.login),
+    path("writeboard/", views.writeboard),
+    path("writecomment/", views.writecomment),
+    path("getboards", views.getboards),
+    path("getcomments/", views.getcomments),
 ]

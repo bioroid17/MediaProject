@@ -70,3 +70,17 @@ def writecomment(request):
     )
     dto.save()
     return Response()
+
+@api_view(["GET"])
+def getboards(request):
+    boardType = request.GET["boardType"]
+    dtos = Board.objects.filter(boardType=boardType).order_by("-boardNum")
+    print(BoardSerializer(dtos))
+    return Response(json.dumps(dtos))
+
+@api_view(["GET"])
+def getcomments(request):
+    boardNum = request.GET["boardNum"]
+    dtos = Comment.objects.filter(boardNum=boardNum).order_by("-commentNum")
+    print(json.dumps(dtos, indent=4))
+    return Response(json.dumps(dtos))

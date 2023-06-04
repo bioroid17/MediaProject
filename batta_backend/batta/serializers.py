@@ -13,7 +13,7 @@ class CommentSerializer(serializers.ModelSerializer):
 class BoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Board
-        fields = ('boardNum', 'username', 'boardType', 'content', 'writeDate', 'modifyDate')
+        fields = ('boardNum', 'username', 'boardType', 'title', 'content', 'writeDate', 'modifyDate')
 
 class MemberSerializer(serializers.ModelSerializer):
     class Meta:

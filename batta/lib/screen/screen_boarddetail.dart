@@ -1,5 +1,7 @@
-import 'package:batta/widget/widget_comments.dart';
+import 'package:batta/model/model_login.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class BoardDetailScreen extends StatefulWidget {
   final String boardNum, type, title, content, username, datetime;
@@ -25,6 +27,29 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
     Size screenSize = MediaQuery.of(context).size;
     double width = screenSize.width;
     double height = screenSize.height;
+
+    String username = Provider.of<LoginModel>(context).getUsername();
+    String content = "";
+
+    doWriteComment() async {
+      final url = Uri.parse("http://10.0.2.2:8000/batta/writeboard/");
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: <String, String>{
+          "boardNum": widget.boardNum,
+          "username": username,
+          "content": content,
+        },
+      );
+      if (response.statusCode == 200) {
+      } else {
+        throw Exception(response.statusCode.toString());
+      }
+    }
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -34,9 +59,15 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
         ),
         backgroundColor: const Color(0xFFEFECE5),
         body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(
-            vertical: height * 0.02,
-            horizontal: width * 0.04,
+          // padding: EdgeInsets.symmetric(
+          //   vertical: height * 0.02,
+          //   horizontal: width * 0.04,
+          // ),
+          padding: EdgeInsets.fromLTRB(
+            width * 0.04,
+            height * 0.02,
+            width * 0.04,
+            0,
           ),
           child: Center(
             child: Column(
@@ -96,58 +127,27 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
                 //   ),
                 //   itemCount: 5,
                 // ),
-                Column(
-                  children: [
-                    const Divider(
-                      color: Color(0xFF0D2065),
-                      thickness: 1.8,
+                Row(
+                  children: <Widget>[
+                    Flexible(
+                      child: TextField(
+                        decoration: const InputDecoration.collapsed(
+                          hintText: "Send a message",
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            content = value;
+                          });
+                        },
+                      ),
                     ),
-                    Comments(
-                      boardNum: widget.boardNum,
-                      commentNum: '1',
-                      content: "댓글 1",
-                      username: "익명",
-                      datetime: "2023-05-15 02:45",
-                      profImage: "asdf",
-                    ),
-                    const Divider(
-                      color: Color(0xFF0D2065),
-                      thickness: 1.8,
-                    ),
-                    Comments(
-                      boardNum: widget.boardNum,
-                      commentNum: '2',
-                      content: "댓글 2",
-                      username: "익명",
-                      datetime: "2023-05-15 02:45",
-                      profImage: "asdf",
-                    ),
-                    const Divider(
-                      color: Color(0xFF0D2065),
-                      thickness: 1.8,
-                    ),
-                    Comments(
-                      boardNum: widget.boardNum,
-                      commentNum: '3',
-                      content: "댓글 3",
-                      username: "익명",
-                      datetime: "2023-05-15 02:45",
-                      profImage: "asdf",
-                    ),
-                    const Divider(
-                      color: Color(0xFF0D2065),
-                      thickness: 1.8,
-                    ),
-                    Comments(
-                      boardNum: widget.boardNum,
-                      commentNum: '4',
-                      content: "댓글 4",
-                      username: "익명",
-                      datetime: "2023-05-15 02:45",
-                      profImage: "asdf",
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                      child: IconButton(
+                          icon: const Icon(Icons.send), onPressed: () {}),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),

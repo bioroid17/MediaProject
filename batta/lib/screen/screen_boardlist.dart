@@ -37,14 +37,16 @@ class BoardListScreen extends StatelessWidget {
           body: const TabBarView(
             children: [
               BoardScreen(
-                type: "free",
+                boardType: "free",
               ),
               BoardScreen(
-                type: "circle",
+                boardType: "circle",
               ),
-              BoardScreen(type: "map"),
               BoardScreen(
-                type: "shop",
+                boardType: "map",
+              ),
+              BoardScreen(
+                boardType: "shop",
               ),
             ],
           ),
