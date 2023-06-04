@@ -19,7 +19,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
     const HomeScreen(),
     const BoardListScreen(),
     const NoticeScreen(
-      type: '',
+      boardType: '',
     ),
     const SettingScreen(),
   ];

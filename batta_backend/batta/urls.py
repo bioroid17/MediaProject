@@ -6,6 +6,7 @@ urlpatterns = [
     path("login/", views.login),
     path("writeboard/", views.writeboard),
     path("writecomment/", views.writecomment),
+    path("getmember", views.getmember),
     path("getboards", views.getboards),
-    path("getcomments/", views.getcomments),
+    path("getcomments", views.getcomments),
 ]

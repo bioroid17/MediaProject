@@ -4,16 +4,17 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 class BoardDetailScreen extends StatefulWidget {
-  final String boardNum, type, title, content, username, datetime;
+  final String boardType, title, content, username, modifyDate;
   final String? profImage;
+  final int boardNum;
   const BoardDetailScreen({
     super.key,
     required this.boardNum,
-    required this.type,
+    required this.boardType,
     required this.title,
     required this.content,
     required this.username,
-    required this.datetime,
+    required this.modifyDate,
     this.profImage,
   });
 
@@ -32,14 +33,14 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
     String content = "";
 
     doWriteComment() async {
-      final url = Uri.parse("http://10.0.2.2:8000/batta/writeboard/");
+      final url = Uri.parse("http://10.0.2.2:8000/batta/writecomments/");
       final response = await http.post(
         url,
         headers: <String, String>{
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: <String, String>{
-          "boardNum": widget.boardNum,
+          "boardNum": widget.boardNum.toString(),
           "username": username,
           "content": content,
         },
@@ -57,7 +58,7 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
           title: Text(widget.title),
           centerTitle: true,
         ),
-        backgroundColor: const Color(0xFFEFECE5),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
           // padding: EdgeInsets.symmetric(
           //   vertical: height * 0.02,
@@ -91,7 +92,7 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(widget.username),
-                                Text(widget.datetime),
+                                Text(widget.modifyDate),
                               ],
                             ),
                           ],

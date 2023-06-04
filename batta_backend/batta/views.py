@@ -4,6 +4,7 @@ from .models import Member, Board, Comment
 from .serializers import MemberSerializer, BoardSerializer, CommentSerializer
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
+from django.core import serializers
 
 import json
 
@@ -72,15 +73,19 @@ def writecomment(request):
     return Response()
 
 @api_view(["GET"])
+def getmember(request):
+    username = request.GET["username"]
+    dto = Member.objects.filter(username=username)
+    return Response(dto.values()[0], content_type=u"application/json; charset=utf-8")
+
+@api_view(["GET"])
 def getboards(request):
     boardType = request.GET["boardType"]
     dtos = Board.objects.filter(boardType=boardType).order_by("-boardNum")
-    print(BoardSerializer(dtos))
-    return Response(json.dumps(dtos))
+    return Response(dtos.values(), content_type=u"application/json; charset=utf-8")
 
 @api_view(["GET"])
 def getcomments(request):
     boardNum = request.GET["boardNum"]
     dtos = Comment.objects.filter(boardNum=boardNum).order_by("-commentNum")
-    print(json.dumps(dtos, indent=4))
-    return Response(json.dumps(dtos))
+    return Response(dtos.values(), content_type=u"application/json; charset=utf-8")

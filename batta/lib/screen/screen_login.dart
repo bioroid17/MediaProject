@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
           title: const Text('BATTA 로그인'),
           centerTitle: true,
         ),
-        backgroundColor: const Color(0xFFEFECE5),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
           child: Center(
             child: Container(

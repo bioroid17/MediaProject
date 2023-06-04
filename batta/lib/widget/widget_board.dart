@@ -2,17 +2,19 @@ import 'package:batta/screen/screen_boarddetail.dart';
 import 'package:flutter/material.dart';
 
 class Board extends StatelessWidget {
-  final String boardNum, type, title, content, username, datetime;
+  final String boardType, title, content, username, writeDate, modifyDate;
   final String? profImage;
+  final int boardNum;
 
   const Board({
     super.key,
     required this.boardNum,
-    required this.type,
+    required this.boardType,
     required this.title,
     required this.content,
     required this.username,
-    required this.datetime,
+    required this.writeDate,
+    required this.modifyDate,
     this.profImage,
   });
 
@@ -25,11 +27,11 @@ class Board extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => BoardDetailScreen(
               boardNum: boardNum,
-              type: type,
+              boardType: boardType,
               title: title,
               content: content,
               username: username,
-              datetime: datetime,
+              modifyDate: modifyDate,
               profImage: profImage,
             ),
           ),
@@ -51,7 +53,7 @@ class Board extends StatelessWidget {
                       Text(username),
                     ],
                   ),
-                  Text(datetime),
+                  Text(modifyDate),
                 ],
               ),
               Text(

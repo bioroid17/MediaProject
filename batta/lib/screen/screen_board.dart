@@ -23,6 +23,9 @@ class BoardScreen extends StatelessWidget {
       for (var board in boards) {
         boardList.add(BoardModel.fromJson(board));
       }
+      for (var board in boardList) {
+        board.getMember();
+      }
       return boardList;
     } else {
       throw Exception(response.statusCode.toString());
@@ -36,26 +39,59 @@ class BoardScreen extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ListView.separated(
-          scrollDirection: Axis.vertical,
-          itemBuilder: (context, index) {
-            return Board(
-              boardNum: "$index",
-              type: boardType,
-              title: "$boardType title${index + 1}",
-              content:
-                  "글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용",
-              username: "익명",
-              datetime: "2023-05-15 00:00",
-              profImage: "ㅁㄴㅇㄹ",
+        // child: ListView.separated(
+        //   scrollDirection: Axis.vertical,
+        //   itemBuilder: (context, index) {
+        //     return Board(
+        //       boardNum: index,
+        //       boardType: boardType,
+        //       title: "$boardType title${index + 1}",
+        //       content:
+        //           "글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용",
+        //       username: "익명",
+        //       writeDate: "2023-05-15 00:00",
+        //       modifyDate: "2023-05-15 00:00",
+        //     );
+        //   },
+        //   separatorBuilder: (context, index) => const Divider(
+        //     thickness: 0.5,
+        //     height: 20,
+        //     color: Color.fromARGB(255, 13, 32, 101),
+        //   ),
+        //   itemCount: 30,
+        // ),
+        child: FutureBuilder(
+          future: boards,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return ListView.separated(
+                scrollDirection: Axis.vertical,
+                itemBuilder: (context, index) {
+                  var board = snapshot.data![index];
+                  return Board(
+                    boardNum: board.boardNum,
+                    boardType: board.boardType,
+                    title: board.title,
+                    content: board.content,
+                    username: board.username,
+                    writeDate: board.writeDate,
+                    modifyDate: board.modifyDate,
+                  );
+                },
+                separatorBuilder: (context, index) => const Divider(
+                  thickness: 0.5,
+                  height: 20,
+                  color: Color.fromARGB(255, 13, 32, 101),
+                ),
+                itemCount: snapshot.data!.length,
+              );
+            }
+
+            return const Center(
+              // 로딩 동그라미 그려주는 위젯
+              child: CircularProgressIndicator(),
             );
           },
-          separatorBuilder: (context, index) => const Divider(
-            thickness: 1.8,
-            height: 20,
-            color: Color.fromARGB(255, 13, 32, 101),
-          ),
-          itemCount: 30,
         ),
       ),
     );
