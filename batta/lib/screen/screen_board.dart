@@ -39,27 +39,6 @@ class BoardScreen extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        // child: ListView.separated(
-        //   scrollDirection: Axis.vertical,
-        //   itemBuilder: (context, index) {
-        //     return Board(
-        //       boardNum: index,
-        //       boardType: boardType,
-        //       title: "$boardType title${index + 1}",
-        //       content:
-        //           "글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용",
-        //       username: "익명",
-        //       writeDate: "2023-05-15 00:00",
-        //       modifyDate: "2023-05-15 00:00",
-        //     );
-        //   },
-        //   separatorBuilder: (context, index) => const Divider(
-        //     thickness: 0.5,
-        //     height: 20,
-        //     color: Color.fromARGB(255, 13, 32, 101),
-        //   ),
-        //   itemCount: 30,
-        // ),
         child: FutureBuilder(
           future: boards,
           builder: (context, snapshot) {
@@ -86,7 +65,6 @@ class BoardScreen extends StatelessWidget {
                 itemCount: snapshot.data!.length,
               );
             }
-
             return const Center(
               // 로딩 동그라미 그려주는 위젯
               child: CircularProgressIndicator(),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Comments extends StatelessWidget {
-  final String boardNum, commentNum, content, username, datetime;
+  final String content, username, writeDate, modifyDate;
+  final int boardNum, commentNum;
   final String? profImage;
 
   const Comments({
@@ -10,7 +11,8 @@ class Comments extends StatelessWidget {
     required this.commentNum,
     required this.content,
     required this.username,
-    required this.datetime,
+    required this.writeDate,
+    required this.modifyDate,
     this.profImage,
   });
 
@@ -38,7 +40,7 @@ class Comments extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(username),
-                    Text(datetime),
+                    Text(modifyDate),
                   ],
                 ),
               ],
@@ -48,7 +50,15 @@ class Comments extends StatelessWidget {
         SizedBox(
           height: height * 0.01,
         ),
-        Text(content),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: width * 0.02),
+          child: Text(content),
+        ),
+        const Divider(
+          thickness: 0.5,
+          height: 20,
+          color: Color.fromARGB(255, 13, 32, 101),
+        ),
       ],
     );
   }

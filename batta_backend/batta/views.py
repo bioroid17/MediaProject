@@ -62,12 +62,13 @@ def writeboard(request):
 @api_view(["POST"])
 @csrf_exempt
 def writecomment(request):
-    username = request.POST["username"],
-    boardNum = request.POST["boardNum"],
+    username = request.POST["username"]
+    boardNum = request.POST["boardNum"]
+    content = request.POST["content"]
     dto = Comment(
         username = Member.objects.get(username=username),
         boardNum = Board.objects.get(boardNum=boardNum),
-        content = request.POST["content"],
+        content = content,
     )
     dto.save()
     return Response()
@@ -88,4 +89,5 @@ def getboards(request):
 def getcomments(request):
     boardNum = request.GET["boardNum"]
     dtos = Comment.objects.filter(boardNum=boardNum).order_by("-commentNum")
+    print(dtos.values())
     return Response(dtos.values(), content_type=u"application/json; charset=utf-8")
