@@ -58,8 +58,10 @@ class _WriteBoardScreenState extends State<WriteBoardScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 13, 32, 101),
           title: const Text('글 쓰기'),
           centerTitle: true,
+          shadowColor: Colors.grey,
         ),
         body: Center(
           child: Container(
@@ -116,64 +118,64 @@ class _WriteBoardScreenState extends State<WriteBoardScreen> {
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            if (title.isEmpty) {
-              showDialog(
-                context: context,
-                barrierDismissible: true,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text("글쓰기 오류"),
-                    content: const SingleChildScrollView(
-                      child: ListBody(
-                        children: [
-                          Text("제목을 작성해 주세요"),
-                        ],
+            onPressed: () {
+              if (title.isEmpty) {
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("글쓰기 오류"),
+                      content: const SingleChildScrollView(
+                        child: ListBody(
+                          children: [
+                            Text("제목을 작성해 주세요"),
+                          ],
+                        ),
                       ),
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text("확인"),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("확인"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              } else if (content.isEmpty) {
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("글쓰기 오류"),
+                      content: const SingleChildScrollView(
+                        child: ListBody(
+                          children: [
+                            Text("내용을 작성해 주세요"),
+                          ],
+                        ),
                       ),
-                    ],
-                  );
-                },
-              );
-            } else if (content.isEmpty) {
-              showDialog(
-                context: context,
-                barrierDismissible: true,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text("글쓰기 오류"),
-                    content: const SingleChildScrollView(
-                      child: ListBody(
-                        children: [
-                          Text("내용을 작성해 주세요"),
-                        ],
-                      ),
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text("확인"),
-                      ),
-                    ],
-                  );
-                },
-              );
-            } else {
-              doWriteBoard();
-              Navigator.of(context).pop();
-            }
-          },
-          label: const Text("작성 완료"),
-        ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("확인"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              } else {
+                doWriteBoard();
+                Navigator.of(context).pop();
+              }
+            },
+            label: const Text("작성 완료"),
+            backgroundColor: const Color.fromARGB(255, 13, 32, 101)),
       ),
     );
   }

@@ -11,55 +11,60 @@ class BoardListScreen extends StatelessWidget {
     return SafeArea(
       child: DefaultTabController(
         length: 4,
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: const Color.fromARGB(255, 13, 32, 101),
-            title: const Text('BATTA 게시판'),
-            centerTitle: true,
-            bottom: const TabBar(
-              tabs: [
-                Tab(
-                  text: "자유게시판",
+        child: Center(
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: const Color.fromARGB(255, 13, 32, 101),
+              shadowColor: Colors.grey,
+              title: const Text('BATTA 게시판'),
+              centerTitle: true,
+              bottom: const TabBar(
+                indicatorColor: Colors.white,
+                indicatorSize: TabBarIndicatorSize.tab,
+                tabs: [
+                  Tab(
+                    text: "자유게시판",
+                  ),
+                  Tab(
+                    text: "모임게시판",
+                  ),
+                  Tab(
+                    text: "모임 지도",
+                  ),
+                  Tab(
+                    text: "쇼핑",
+                  ),
+                ],
+              ),
+            ),
+            backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+            body: const TabBarView(
+              children: [
+                BoardScreen(
+                  type: "free",
                 ),
-                Tab(
-                  text: "모임게시판",
+                BoardScreen(
+                  type: "circle",
                 ),
-                Tab(
-                  text: "모임 지도",
-                ),
-                Tab(
-                  text: "쇼핑",
+                BoardScreen(type: "map"),
+                BoardScreen(
+                  type: "shop",
                 ),
               ],
             ),
-          ),
-          backgroundColor: const Color(0xFFEFECE5),
-          body: const TabBarView(
-            children: [
-              BoardScreen(
-                type: "free",
-              ),
-              BoardScreen(
-                type: "circle",
-              ),
-              BoardScreen(type: "map"),
-              BoardScreen(
-                type: "shop",
-              ),
-            ],
-          ),
-          floatingActionButton: FloatingActionButton.extended(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const WriteBoardScreen(),
-                ),
-              );
-            },
-            backgroundColor: const Color.fromARGB(255, 13, 32, 101),
-            icon: const Icon(CupertinoIcons.pencil_circle),
-            label: const Text("글 쓰기"),
+            floatingActionButton: FloatingActionButton.extended(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const WriteBoardScreen(),
+                  ),
+                );
+              },
+              backgroundColor: const Color.fromARGB(255, 13, 32, 101),
+              icon: const Icon(CupertinoIcons.pencil_circle),
+              label: const Text("글 쓰기"),
+            ),
           ),
         ),
       ),

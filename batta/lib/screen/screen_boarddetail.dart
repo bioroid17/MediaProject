@@ -32,7 +32,7 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
           title: Text(widget.title),
           centerTitle: true,
         ),
-        backgroundColor: const Color(0xFFEFECE5),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
           padding: EdgeInsets.symmetric(
             vertical: height * 0.02,
@@ -99,8 +99,8 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
                 Column(
                   children: [
                     const Divider(
-                      color: Color(0xFF0D2065),
-                      thickness: 1.8,
+                      color: Colors.grey,
+                      thickness: 0.5,
                     ),
                     Comments(
                       boardNum: widget.boardNum,
@@ -111,8 +111,8 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
                       profImage: "asdf",
                     ),
                     const Divider(
-                      color: Color(0xFF0D2065),
-                      thickness: 1.8,
+                      color: Colors.grey,
+                      thickness: 0.5,
                     ),
                     Comments(
                       boardNum: widget.boardNum,
@@ -123,8 +123,8 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
                       profImage: "asdf",
                     ),
                     const Divider(
-                      color: Color(0xFF0D2065),
-                      thickness: 1.8,
+                      color: Colors.grey,
+                      thickness: 0.5,
                     ),
                     Comments(
                       boardNum: widget.boardNum,
@@ -135,8 +135,8 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
                       profImage: "asdf",
                     ),
                     const Divider(
-                      color: Color(0xFF0D2065),
-                      thickness: 1.8,
+                      color: Colors.grey,
+                      thickness: 0.5,
                     ),
                     Comments(
                       boardNum: widget.boardNum,

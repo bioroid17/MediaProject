@@ -29,7 +29,7 @@ class BoardScreen extends StatelessWidget {
             );
           },
           separatorBuilder: (context, index) => const Divider(
-            thickness: 1.8,
+            thickness: 0.5,
             height: 20,
             color: Color.fromARGB(255, 13, 32, 101),
           ),
