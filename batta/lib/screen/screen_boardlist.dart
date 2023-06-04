@@ -2,9 +2,10 @@ import 'package:batta/screen/screen_board.dart';
 import 'package:batta/screen/screen_writeboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:batta/screen/screen_shopping.dart';
 
 class BoardListScreen extends StatelessWidget {
-  const BoardListScreen({super.key});
+  const BoardListScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +44,7 @@ class BoardListScreen extends StatelessWidget {
                 BoardScreen(
                   boardType: "circle",
                 ),
-                BoardScreen(
-                  boardType: "shop",
-                ),
+                ShoppingPage(), // 쇼핑
               ],
             ),
             floatingActionButton: FloatingActionButton.extended(
