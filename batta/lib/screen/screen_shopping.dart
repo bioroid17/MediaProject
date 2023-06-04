@@ -27,31 +27,38 @@ class _ShoppingPageState extends State<ShoppingPage> {
   List<Map<String, dynamic>> items = [
     {
       'title': 'Item 1',
-      'imageUrl': 'https://example.com/image1.jpg',
+      'imageUrl':
+          'https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U',
     },
     {
       'title': 'Item 2',
-      'imageUrl': 'https://example.com/image2.jpg',
+      'imageUrl':
+          'https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U',
     },
     {
       'title': 'Item 3',
-      'imageUrl': 'https://example.com/image3.jpg',
+      'imageUrl':
+          'https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U',
     },
     {
       'title': 'Item 4',
-      'imageUrl': 'https://example.com/image4.jpg',
+      'imageUrl':
+          'https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U',
     },
     {
       'title': 'Item 5',
-      'imageUrl': 'https://example.com/image5.jpg',
+      'imageUrl':
+          'https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U',
     },
     {
       'title': 'Item 6',
-      'imageUrl': 'https://example.com/image6.jpg',
+      'imageUrl':
+          'https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U',
     },
     {
       'title': 'Item 7',
-      'imageUrl': 'https://example.com/image7.jpg',
+      'imageUrl':
+          'https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U',
     },
   ];
 
@@ -98,6 +105,7 @@ class WebViewPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('네이버 쇼핑'),
+        backgroundColor: const Color.fromARGB(255, 13, 32, 101),
       ),
       body: WebView(
         initialUrl: url,
