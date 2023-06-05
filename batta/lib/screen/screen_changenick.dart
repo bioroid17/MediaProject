@@ -18,7 +18,7 @@ class _ChangeNickScreenState extends State<ChangeNickScreen> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 13, 32, 101),
-          title: const Text('이메일 변경'),
+          title: const Text('닉네임 변경'),
           centerTitle: true,
         ),
         body: Column(

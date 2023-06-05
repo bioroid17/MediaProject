@@ -6,12 +6,12 @@ class ShoppingApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: '장비 쇼핑',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return SafeArea(
+      child: MaterialApp(
+        title: '쇼핑',
+        theme: ThemeData(),
+        home: const ShoppingPage(),
       ),
-      home: const ShoppingPage(),
     );
   }
 }
@@ -26,17 +26,17 @@ class ShoppingPage extends StatefulWidget {
 class _ShoppingPageState extends State<ShoppingPage> {
   List<Map<String, dynamic>> items = [
     {
-      'title': 'Item 1',
+      'title': '프랭클린 야구글러브 모음 좌투 우투 아동용 성인용',
+      'imageUrl':
+          'https://shopping-phinf.pstatic.net/main_3892255/38922554778.20230325145833.jpg?type=f640',
+    },
+    {
+      'title': '홈런 야구배트 대 중 소 나무 야구 방망이 아동 청소년 성인',
       'imageUrl':
           'https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U',
     },
     {
-      'title': 'Item 2',
-      'imageUrl':
-          'https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U',
-    },
-    {
-      'title': 'Item 3',
+      'title': '티라노스포츠 티라노 하이퍼 도그마 2 0',
       'imageUrl':
           'https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U',
     },
@@ -83,7 +83,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
                   builder: (context) => const WebViewPage(),
                   settings: const RouteSettings(
                     arguments:
-                        'https://search.shopping.naver.com/search/all?frm=NVSHATC&origQuery=%EC%95%BC%EA%B5%AC%EC%9E%A5%EB%B9%84&pagingIndex=1&pagingSize=40&productSet=total&query=%EC%95%BC%EA%B5%AC%EC%9E%A5%EB%B9%84&sort=review&timestamp=&viewType=list', // 네이버 쇼핑 URL
+                        'https://search.shopping.naver.com/catalog/38922554778?query=%EC%95%BC%EA%B5%AC%20%EA%B8%80%EB%9F%AC%EB%B8%8C&NaPm=ct%3Dlii7xn00%7Cci%3D1a0b8965e9be27d4534634165adda235d272f0c9%7Ctr%3Dslsl%7Csn%3D95694%7Chk%3D7f72936e12c457f55c2c6ce92eb2024f08aafb13', // 네이버 쇼핑 URL
                   ),
                 ),
               );
@@ -102,14 +102,17 @@ class WebViewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final String url = ModalRoute.of(context)?.settings.arguments as String;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('네이버 쇼핑'),
-        backgroundColor: const Color.fromARGB(255, 13, 32, 101),
-      ),
-      body: WebView(
-        initialUrl: url,
-        javascriptMode: JavascriptMode.unrestricted,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('네이버 쇼핑'),
+          backgroundColor: const Color.fromARGB(255, 13, 32, 101),
+          shadowColor: Colors.grey,
+        ),
+        body: WebView(
+          initialUrl: url,
+          javascriptMode: JavascriptMode.unrestricted,
+        ),
       ),
     );
   }

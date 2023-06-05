@@ -50,6 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 13, 32, 101),
+          shadowColor: Colors.grey,
           title: const Text('BATTA 로그인'),
           centerTitle: true,
         ),
