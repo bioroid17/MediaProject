@@ -20,7 +20,7 @@ class BoardListScreen extends StatelessWidget {
               title: const Text('BATTA 게시판'),
               centerTitle: true,
               bottom: const TabBar(
-                indicatorColor: Colors.white,
+                indicatorColor: Color.fromARGB(255, 253, 187, 99),
                 indicatorSize: TabBarIndicatorSize.tab,
                 tabs: [
                   Tab(

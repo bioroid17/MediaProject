@@ -63,31 +63,49 @@ class _ShoppingPageState extends State<ShoppingPage> {
   ];
 
   @override
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
+      body: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, // 그리드 열 개수
+          childAspectRatio: 1, // 이미지의 가로 세로 비율 (1:1)
+        ),
         itemCount: items.length,
         itemBuilder: (context, index) {
           final item = items[index];
-          return ListTile(
-            leading: CircleAvatar(
-              backgroundImage:
-                  NetworkImage(item['imageUrl'] as String), // 캐스트 추가
-            ),
-            title: Text(item['title'] as String), // 캐스트 추가
+          return GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const WebViewPage(),
-                  settings: const RouteSettings(
-                    arguments:
-                        'https://search.shopping.naver.com/catalog/38922554778?query=%EC%95%BC%EA%B5%AC%20%EA%B8%80%EB%9F%AC%EB%B8%8C&NaPm=ct%3Dlii7xn00%7Cci%3D1a0b8965e9be27d4534634165adda235d272f0c9%7Ctr%3Dslsl%7Csn%3D95694%7Chk%3D7f72936e12c457f55c2c6ce92eb2024f08aafb13', // 네이버 쇼핑 URL
+                  builder: (context) => const WebViewPage(
+                    url:
+                        'https://search.shopping.naver.com/catalog/38922554778?query=%EC%95%BC%EA%B5%AC%20%EA%B8%80%EB%9F%AC%EB%B8%8C&NaPm=ct%3Dlii7xn00%7Cci%3D1a0b8965e9be27d4534634165adda235d272f0c9%7Ctr%3Dslsl%7Csn%3D95694%7Chk%3D7f72936e12c457f55c2c6ce92eb2024f08aafb13',
                   ),
                 ),
               );
             },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: Image.network(
+                    item['imageUrl'] as String,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    item['title'] as String,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           );
         },
       ),
@@ -96,12 +114,12 @@ class _ShoppingPageState extends State<ShoppingPage> {
 }
 
 class WebViewPage extends StatelessWidget {
-  const WebViewPage({super.key});
+  final String url;
+
+  const WebViewPage({required this.url, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final String url = ModalRoute.of(context)?.settings.arguments as String;
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
