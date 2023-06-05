@@ -155,7 +155,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               },
                             );
                           },
-                          child: const Text("중복 확인"),
+                          child: Text(
+                            "중복 확인",
+                            style: TextStyle(
+                              fontSize: width * 0.032,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -246,7 +251,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               },
                             );
                           },
-                          child: const Text("중복 확인"),
+                          child: Text(
+                            "중복 확인",
+                            style: TextStyle(
+                              fontSize: width * 0.032,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -289,8 +299,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               },
                             );
                           },
-                          child: const Text(
+                          child: Text(
                             "우편번호 찾기",
+                            style: TextStyle(
+                              fontSize: width * 0.032,
+                            ),
                           ),
                         ),
                       ],
