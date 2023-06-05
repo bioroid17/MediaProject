@@ -32,8 +32,12 @@ class _DaumPostcodeSearchScreenState extends State<DaumPostcodeSearchScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(title: const Text("다음 주소 검색")),
-        backgroundColor: const Color.fromARGB(255, 13, 32, 101),
+        appBar: AppBar(
+          title: const Text("다음 주소 검색"),
+          backgroundColor: const Color.fromARGB(255, 13, 32, 101),
+          shadowColor: Colors.grey,
+        ),
+        backgroundColor: Colors.white,
         body: Stack(
           children: [
             InAppWebView(
