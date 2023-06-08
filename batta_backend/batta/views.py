@@ -186,3 +186,22 @@ def changephone(request):
     dto.phone = request.POST["phone"]
     dto.save()
     return Response()
+
+@api_view(["GET"])
+def checkusername(request):
+    username = request.GET["username"]
+    try :
+        Member.objects.get(username=username)
+        result = False
+    except ObjectDoesNotExist:
+        result = True
+    return Response({"result":result})
+
+@api_view(["GET"])
+def checknickname(request):
+    nickname = request.GET["nickname"]
+    if Member.objects.filter(nickname=nickname).exists():
+        result = False
+    else:
+        result = True
+    return Response({"result":result})

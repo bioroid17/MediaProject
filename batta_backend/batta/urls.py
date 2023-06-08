@@ -20,4 +20,6 @@ urlpatterns = [
     path("changeemail/", views.changeemail),
     path("changenick/", views.changenick),
     path("changephone/", views.changephone),
+    path("checkusername", views.checkusername),
+    path("checknickname", views.checknickname),
 ]
