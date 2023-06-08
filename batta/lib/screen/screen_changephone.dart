@@ -3,19 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
-class ChangeEmailScreen extends StatefulWidget {
-  const ChangeEmailScreen({
+class ChangePhoneScreen extends StatefulWidget {
+  const ChangePhoneScreen({
     super.key,
-    required this.email,
+    required this.phone,
   });
-
-  final String email;
+  final String phone;
 
   @override
-  State<ChangeEmailScreen> createState() => _ChangeEmailScreenState();
+  State<ChangePhoneScreen> createState() => _ChangePhoneScreenState();
 }
 
-class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
+class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -23,10 +22,10 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
     double height = screenSize.height;
 
     String username = Provider.of<LoginModel>(context).getUsername();
-    String email = widget.email;
+    String phone = widget.phone;
 
-    changeEmail() async {
-      final url = Uri.parse("http://10.0.2.2:8000/batta/changeemail/");
+    changePhone() async {
+      final url = Uri.parse("http://10.0.2.2:8000/batta/changephone/");
       final response = await http.post(
         url,
         headers: <String, String>{
@@ -34,7 +33,7 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
         },
         body: <String, String>{
           "username": username,
-          "email": email,
+          "phone": phone,
         },
       );
       if (response.statusCode == 200) {
@@ -58,13 +57,13 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                 vertical: height * 0.05,
               ),
               child: TextField(
-                controller: TextEditingController(text: email),
+                controller: TextEditingController(text: phone),
                 decoration: const InputDecoration(
                   labelText: '이메일',
                 ),
                 keyboardType: TextInputType.text,
                 onChanged: (value) {
-                  email = value;
+                  phone = value;
                 },
               ),
             ),
@@ -81,7 +80,7 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                   ),
                 ),
                 onPressed: () {
-                  changeEmail().whenComplete(() {
+                  changePhone().whenComplete(() {
                     Navigator.of(context).pop();
                   });
                 },

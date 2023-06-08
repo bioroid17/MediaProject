@@ -1,18 +1,34 @@
+import 'dart:convert';
+
+import 'package:batta/model/model_login.dart';
 import 'package:batta/screen/screen_changeemail.dart';
 import 'package:batta/screen/screen_changeimage.dart';
 import 'package:batta/screen/screen_changenick.dart';
 import 'package:batta/screen/screen_changepassword.dart';
+import 'package:batta/screen/screen_changephone.dart';
 import 'package:batta/screen/screen_deleteaccount.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
-class SettingScreen extends StatelessWidget {
+class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
+
+  @override
+  State<SettingScreen> createState() => _SettingScreenState();
+}
+
+class _SettingScreenState extends State<SettingScreen> {
+  late String email, nickname, phone;
 
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     double width = screenSize.width;
     double height = screenSize.height;
+
+    String username = Provider.of<LoginModel>(context).getUsername();
+    // String? profile;
 
     return SafeArea(
       child: Scaffold(
@@ -74,15 +90,42 @@ class SettingScreen extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ChangeEmailScreen(),
-                            ),
-                          );
+                          getEmail(username).whenComplete(() {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChangeEmailScreen(
+                                  email: email,
+                                ),
+                              ),
+                            );
+                          });
                         },
                         child: const Text(
                           "이메일 변경",
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: height * 0.01,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          getPhone(username).whenComplete(() {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChangePhoneScreen(
+                                  phone: phone,
+                                ),
+                              ),
+                            );
+                          });
+                        },
+                        child: const Text(
+                          "전화번호 변경",
                           style: TextStyle(
                             fontSize: 18,
                           ),
@@ -119,12 +162,16 @@ class SettingScreen extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ChangeNickScreen(),
-                            ),
-                          );
+                          getNick(username).whenComplete(() {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChangeNickScreen(
+                                  nickname: nickname,
+                                ),
+                              ),
+                            );
+                          });
                         },
                         child: const Text(
                           "닉네임 변경",
@@ -232,13 +279,7 @@ class SettingScreen extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) =>
-                          //         const ChangePasswordScreen(),
-                          //   ),
-                          // );
+                          Navigator.popUntil(context, (route) => route.isFirst);
                         },
                         child: const Text(
                           "로그아웃",
@@ -275,5 +316,38 @@ class SettingScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> getEmail(String username) async {
+    final url =
+        Uri.parse("http://10.0.2.2:8000/batta/getemail?username=$username");
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      email = jsonDecode(response.body)["email"];
+    } else {
+      throw Exception(response.statusCode.toString());
+    }
+  }
+
+  Future<void> getNick(String username) async {
+    final url =
+        Uri.parse("http://10.0.2.2:8000/batta/getnick?username=$username");
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      nickname = jsonDecode(response.body)["nickname"];
+    } else {
+      throw Exception(response.statusCode.toString());
+    }
+  }
+
+  Future<void> getPhone(String username) async {
+    final url =
+        Uri.parse("http://10.0.2.2:8000/batta/getphone?username=$username");
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      phone = jsonDecode(response.body)["phone"];
+    } else {
+      throw Exception(response.statusCode.toString());
+    }
   }
 }

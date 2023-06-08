@@ -1,31 +1,31 @@
-import 'package:batta/model/model_login.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
-enum BoardType {
-  free("자유게시판", "free"),
-  circle("모임게시판", "circle");
+class ModifyBoardScreen extends StatefulWidget {
+  const ModifyBoardScreen({
+    super.key,
+    required this.boardNum,
+    required this.title,
+    required this.content,
+  });
 
-  final String korString;
-  final String engType;
-  const BoardType(this.korString, this.engType);
-}
-
-class WriteBoardScreen extends StatefulWidget {
-  const WriteBoardScreen({super.key});
+  final int boardNum;
+  final String title, content;
 
   @override
-  State<WriteBoardScreen> createState() => _WriteBoardScreenState();
+  State<ModifyBoardScreen> createState() => _ModifyBoardScreenState();
 }
 
-class _WriteBoardScreenState extends State<WriteBoardScreen> {
-  final List<BoardType> boards = [BoardType.free, BoardType.circle];
-  BoardType chosenValue = BoardType.free;
-  String chosenType = BoardType.free.engType;
-
+class _ModifyBoardScreenState extends State<ModifyBoardScreen> {
   String title = "";
   String content = "";
+
+  @override
+  initState() {
+    super.initState();
+    title = widget.title;
+    content = widget.content;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,18 +33,15 @@ class _WriteBoardScreenState extends State<WriteBoardScreen> {
     double width = screenSize.width;
     double height = screenSize.height;
 
-    String username = Provider.of<LoginModel>(context).getUsername();
-
-    doWriteBoard() async {
-      final url = Uri.parse("http://10.0.2.2:8000/batta/writeboard/");
+    doModifyBoard() async {
+      final url = Uri.parse("http://10.0.2.2:8000/batta/modifyboard/");
       final response = await http.post(
         url,
         headers: <String, String>{
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: <String, String>{
-          "username": username,
-          "boardType": chosenType,
+          "boardNum": widget.boardNum.toString(),
           "title": title,
           "content": content,
         },
@@ -59,7 +56,7 @@ class _WriteBoardScreenState extends State<WriteBoardScreen> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 13, 32, 101),
-          title: const Text('글 쓰기'),
+          title: const Text('글 수정'),
           centerTitle: true,
           shadowColor: Colors.grey,
         ),
@@ -71,46 +68,26 @@ class _WriteBoardScreenState extends State<WriteBoardScreen> {
             ),
             child: Column(
               children: [
-                DropdownButton(
-                  isExpanded: true,
-                  value: chosenValue,
-                  items: boards.map(
-                    (BoardType value) {
-                      return DropdownMenuItem<BoardType>(
-                        value: value,
-                        child: Text(value.korString),
-                      );
-                    },
-                  ).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      chosenValue = value!;
-                      chosenType = value.engType;
-                    });
-                  },
-                ),
                 TextField(
                   decoration: const InputDecoration(
                     labelText: '글 제목',
                   ),
+                  controller: TextEditingController(text: title),
                   maxLines: null,
                   keyboardType: TextInputType.text,
                   onChanged: (value) {
-                    setState(() {
-                      title = value;
-                    });
+                    title = value;
                   },
                 ),
                 TextField(
                   decoration: const InputDecoration(
                     labelText: '글 내용',
                   ),
+                  controller: TextEditingController(text: content),
                   maxLines: null,
                   keyboardType: TextInputType.text,
                   onChanged: (value) {
-                    setState(() {
-                      content = value;
-                    });
+                    content = value;
                   },
                 ),
               ],
@@ -170,7 +147,7 @@ class _WriteBoardScreenState extends State<WriteBoardScreen> {
                   },
                 );
               } else {
-                doWriteBoard().whenComplete(() {
+                doModifyBoard().whenComplete(() {
                   Navigator.of(context).pop();
                 });
               }

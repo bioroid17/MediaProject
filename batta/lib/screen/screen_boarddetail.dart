@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:batta/model/model_comments.dart';
 import 'package:batta/model/model_login.dart';
+import 'package:batta/screen/screen_modifyboard.dart';
 import 'package:batta/widget/widget_comments.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -27,7 +28,7 @@ class BoardDetailScreen extends StatefulWidget {
 }
 
 class _BoardDetailScreenState extends State<BoardDetailScreen> {
-  String content = "";
+  String commentContent = "";
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,24 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
         body: <String, String>{
           "boardNum": widget.boardNum.toString(),
           "username": writer,
-          "content": content,
+          "content": commentContent,
+        },
+      );
+      if (response.statusCode == 200) {
+      } else {
+        throw Exception(response.statusCode.toString());
+      }
+    }
+
+    doDeleteBoard() async {
+      final url = Uri.parse("http://10.0.2.2:8000/batta/deleteboard/");
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: <String, String>{
+          "boardNum": widget.boardNum.toString(),
         },
       );
       if (response.statusCode == 200) {
@@ -64,6 +82,72 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
           backgroundColor: const Color.fromARGB(255, 13, 32, 101),
           title: Text(widget.title),
           centerTitle: true,
+          actions: [
+            if (writer == widget.username)
+              PopupMenuButton(
+                itemBuilder: (context) => [
+                  const PopupMenuItem(
+                    value: 0,
+                    child: Text("글 수정"),
+                  ),
+                  const PopupMenuItem(
+                    value: 1,
+                    child: Text("글 삭제"),
+                  ),
+                ],
+                onSelected: ((value) {
+                  if (value == 0) {
+                    // 글 수정
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ModifyBoardScreen(
+                          boardNum: widget.boardNum,
+                          title: widget.title,
+                          content: widget.content,
+                        ),
+                      ),
+                    );
+                  }
+                  if (value == 1) {
+                    // 글 삭제
+                    showDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text("작성한 글 삭제"),
+                          content: const SingleChildScrollView(
+                            child: ListBody(
+                              children: [
+                                Text("글을 삭제하시겠습니까?"),
+                              ],
+                            ),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                doDeleteBoard().whenComplete(() {
+                                  Navigator.of(context).pop();
+                                });
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text("확인"),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text("취소"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                }),
+              ),
+          ],
         ),
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
@@ -126,10 +210,11 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
                           decoration: const InputDecoration.collapsed(
                             hintText: "댓글을 입력하세요.",
                           ),
-                          controller: TextEditingController(text: content),
+                          controller:
+                              TextEditingController(text: commentContent),
                           onChanged: (value) {
                             setState(() {
-                              content = value;
+                              commentContent = value;
                             });
                           },
                           maxLines: null,
@@ -142,7 +227,7 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
                             onPressed: () {
                               doWriteComment().whenComplete(() {
                                 setState(() {
-                                  content = "";
+                                  commentContent = "";
                                 });
                               });
                             }),

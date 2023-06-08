@@ -4,9 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:batta/screen/screen_shopping.dart';
 
-class BoardListScreen extends StatelessWidget {
-  const BoardListScreen({Key? key});
+class BoardListScreen extends StatefulWidget {
+  const BoardListScreen({super.key});
 
+  @override
+  State<BoardListScreen> createState() => _BoardListScreenState();
+}
+
+class _BoardListScreenState extends State<BoardListScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(

@@ -89,5 +89,94 @@ def getboards(request):
 def getcomments(request):
     boardNum = request.GET["boardNum"]
     dtos = Comment.objects.filter(boardNum=boardNum).order_by("-commentNum")
-    print(dtos.values())
     return Response(dtos.values(), content_type=u"application/json; charset=utf-8")
+
+@api_view(["POST"])
+@csrf_exempt
+def modifyboard(request):
+    boardNum = request.POST["boardNum"]
+    dto = Board.objects.get(boardNum=boardNum)
+    dto.title = request.POST["title"]
+    dto.content = request.POST["content"]
+    dto.save()
+    return Response()
+    
+@api_view(["POST"])
+@csrf_exempt
+def deleteboard(request):
+    boardNum = request.POST["boardNum"]
+    dto = Board.objects.get(boardNum=boardNum)
+    dto.delete()
+    return Response()
+    
+@api_view(["POST"])
+@csrf_exempt
+def modifycomment(request):
+    commentNum = request.POST["commentNum"]
+    dto = Comment.objects.get(commentNum=commentNum)
+    dto.content = request.POST["content"]
+    dto.save()
+    return Response()
+    
+@api_view(["POST"])
+@csrf_exempt
+def deletecomment(request):
+    commentNum = request.POST["commentNum"]
+    dto = Comment.objects.get(commentNum=commentNum)
+    dto.delete()
+    return Response()
+
+@api_view(["GET"])
+def getemail(request):
+    username = request.GET["username"]
+    email = Member.objects.get(username=username).email
+    return Response({"email":email})
+
+@api_view(["GET"])
+def getnick(request):
+    username = request.GET["username"]
+    nickname = Member.objects.get(username=username).nickname
+    return Response({"nickname":nickname})
+
+@api_view(["POST"])
+@csrf_exempt
+def changepassword(request):
+    username = request.POST["username"]
+    password = request.POST["password"]
+    newPassword = request.POST["newPassword"]
+    result = 0
+    dto = Member.objects.get(username=username)
+    if dto.password == password:
+        result = 1
+        dto.password = newPassword
+        dto.save()
+    else:
+        result = 0
+    return Response(result)
+
+@api_view(["POST"])
+@csrf_exempt
+def changeemail(request):
+    username = request.POST["username"]
+    dto = Member.objects.get(username=username)
+    dto.email = request.POST["email"]
+    dto.save()
+    return Response()
+    
+@api_view(["POST"])
+@csrf_exempt
+def changenick(request):
+    username = request.POST["username"]
+    dto = Member.objects.get(username=username)
+    dto.nickname = request.POST["nickname"]
+    dto.save()
+    return Response()
+
+@api_view(["POST"])
+@csrf_exempt
+def changephone(request):
+    username = request.POST["username"]
+    dto = Member.objects.get(username=username)
+    dto.phone = request.POST["phone"]
+    dto.save()
+    return Response()
