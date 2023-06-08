@@ -90,27 +90,25 @@ class _WriteBoardScreenState extends State<WriteBoardScreen> {
                   },
                 ),
                 TextField(
+                  controller: TextEditingController(text: title),
                   decoration: const InputDecoration(
                     labelText: '글 제목',
                   ),
                   maxLines: null,
                   keyboardType: TextInputType.text,
                   onChanged: (value) {
-                    setState(() {
-                      title = value;
-                    });
+                    title = value;
                   },
                 ),
                 TextField(
+                  controller: TextEditingController(text: content),
                   decoration: const InputDecoration(
                     labelText: '글 내용',
                   ),
                   maxLines: null,
                   keyboardType: TextInputType.text,
                   onChanged: (value) {
-                    setState(() {
-                      content = value;
-                    });
+                    content = value;
                   },
                 ),
               ],

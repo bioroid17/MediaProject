@@ -213,9 +213,7 @@ class _BoardDetailScreenState extends State<BoardDetailScreen> {
                           controller:
                               TextEditingController(text: commentContent),
                           onChanged: (value) {
-                            setState(() {
-                              commentContent = value;
-                            });
+                            commentContent = value;
                           },
                           maxLines: null,
                         ),
