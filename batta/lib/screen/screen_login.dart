@@ -4,6 +4,7 @@ import 'package:batta/screen/screen_register.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,34 +18,22 @@ class _LoginScreenState extends State<LoginScreen> {
   String password = "";
   int result = 0;
 
+  late LoginModel loginInfo;
+  late SharedPreferences userpref;
+
+  @override
+  void initState() {
+    super.initState();
+    initPrefs();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     double width = screenSize.width;
     double height = screenSize.height;
 
-    LoginModel loginInfo = Provider.of<LoginModel>(context);
-
-    doLogin() async {
-      final url = Uri.parse("http://10.0.2.2:8000/batta/login/");
-      final response = await http.post(
-        url,
-        headers: <String, String>{
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: <String, String>{
-          "username": username,
-          "password": password,
-        },
-      );
-      if (response.statusCode == 200) {
-        setState(() {
-          result = int.parse(response.body);
-        });
-      } else {
-        throw Exception(response.statusCode.toString());
-      }
-    }
+    loginInfo = Provider.of<LoginModel>(context);
 
     return SafeArea(
       child: Scaffold(
@@ -85,14 +74,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         vertical: height * 0.02,
                       ),
                       child: TextField(
+                        controller: TextEditingController(text: username),
                         decoration: const InputDecoration(
                           labelText: '아이디',
                         ),
                         keyboardType: TextInputType.text,
                         onChanged: (value) {
-                          setState(() {
-                            username = value;
-                          });
+                          username = value;
                         },
                       ),
                     ),
@@ -101,15 +89,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         vertical: height * 0.02,
                       ),
                       child: TextField(
+                        controller: TextEditingController(text: password),
                         decoration: const InputDecoration(
                           labelText: '비밀번호',
                         ),
                         keyboardType: TextInputType.text,
                         obscureText: true,
                         onChanged: (value) {
-                          setState(() {
-                            password = value;
-                          });
+                          password = value;
                         },
                       ),
                     ),
@@ -133,6 +120,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                 if (result == 1) {
                                   // 아이디, 비밀번호 모두 일치
                                   loginInfo.setUsername(username);
+                                  userpref.setString("battaUsername", username);
+                                  userpref.setString("battaPassword", password);
+                                  setState(() {
+                                    username = "";
+                                    password = "";
+                                  });
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -236,5 +229,113 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> doLogin() async {
+    final url = Uri.parse("http://10.0.2.2:8000/batta/login/");
+    final response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: <String, String>{
+        "username": username,
+        "password": password,
+      },
+    );
+    if (response.statusCode == 200) {
+      setState(() {
+        result = int.parse(response.body);
+      });
+    } else {
+      throw Exception(response.statusCode.toString());
+    }
+  }
+
+  Future initPrefs() async {
+    // 스마트폰 저장소에 액세스를 얻는다.
+    userpref = await SharedPreferences.getInstance();
+    // likedToons를 저장소에서 불러온다.
+    final battaUsername = userpref.getString('battaUsername');
+    final battaPassword = userpref.getString('battaPassword');
+    if (battaUsername != null && battaPassword != null) {
+      setState(() {
+        username = battaUsername;
+        password = battaPassword;
+        doLogin().whenComplete(() {
+          if (result == 1) {
+            // 아이디, 비밀번호 모두 일치
+            loginInfo.setUsername(username);
+            userpref.setString("battaUsername", username);
+            userpref.setString("battaPassword", password);
+            setState(() {
+              username = "";
+              password = "";
+            });
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const NavbarScreen(),
+              ),
+            );
+          } else if (result == 0) {
+            showDialog(
+              context: context,
+              barrierDismissible: true,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text("로그인 오류"),
+                  content: const SingleChildScrollView(
+                    child: ListBody(
+                      children: [
+                        Text("비밀번호가 다릅니다."),
+                      ],
+                    ),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text("확인"),
+                    ),
+                  ],
+                );
+              },
+            );
+          } else if (result == -1) {
+            showDialog(
+              context: context,
+              barrierDismissible: true,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text("로그인 오류"),
+                  content: const SingleChildScrollView(
+                    child: ListBody(
+                      children: [
+                        Text("아이디가 없습니다."),
+                      ],
+                    ),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text("확인"),
+                    ),
+                  ],
+                );
+              },
+            );
+          }
+        });
+      });
+    } else {
+      // 앱을 처음 실행하면 username, password는 없으므로 새로 만들어준다.
+      // 딱히 setString의 결과를 기다릴 필요는 없으므로 await를 쓸 필요는 없다.
+      userpref.setString('battaUsername', "");
+      userpref.setString('battaPassword', "");
+    }
   }
 }
