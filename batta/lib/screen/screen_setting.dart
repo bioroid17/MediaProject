@@ -7,10 +7,11 @@ import 'package:batta/screen/screen_changenick.dart';
 import 'package:batta/screen/screen_changepassword.dart';
 import 'package:batta/screen/screen_changephone.dart';
 import 'package:batta/screen/screen_deleteaccount.dart';
+import 'package:batta/screen/screen_login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -20,19 +21,8 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  static const storage = FlutterSecureStorage();
   late String email, nickname, phone;
-  late SharedPreferences userpref;
-
-  Future initPrefs() async {
-    // 스마트폰 저장소에 액세스를 얻는다.
-    userpref = await SharedPreferences.getInstance();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    initPrefs();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -292,9 +282,14 @@ class _SettingScreenState extends State<SettingScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          userpref.remove("battaUsername");
-                          userpref.remove("battaPassword");
-                          Navigator.popUntil(context, (route) => route.isFirst);
+                          storage.delete(key: "login");
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
+                            ),
+                            (route) => false,
+                          );
                         },
                         child: const Text(
                           "로그아웃",

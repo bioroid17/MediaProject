@@ -2,9 +2,9 @@ import 'package:batta/model/model_login.dart';
 import 'package:batta/screen/screen_navbar.dart';
 import 'package:batta/screen/screen_register.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,12 +19,35 @@ class _LoginScreenState extends State<LoginScreen> {
   int result = 0;
 
   late LoginModel loginInfo;
-  late SharedPreferences userpref;
+  static const storage = FlutterSecureStorage();
+  String? userInfo = ""; //user의 정보를 저장하기 위한 변수
 
   @override
   void initState() {
     super.initState();
-    initPrefs();
+
+    //비동기로 flutter secure storage 정보를 불러오는 작업.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _asyncMethod();
+    });
+  }
+
+  _asyncMethod() async {
+    //read 함수를 통하여 key값에 맞는 정보를 불러오게 됩니다. 이때 불러오는 결과의 타입은 String 타입임을 기억해야 합니다.
+    //(데이터가 없을때는 null을 반환을 합니다.)
+    userInfo = await storage.read(key: "login");
+
+    //user의 정보가 있다면 바로 홈 페이지로 넘어가게 합니다.
+    if (userInfo != null) {
+      List<String> info = userInfo!.split(" ");
+      loginInfo.setUsername(info[1]); // info[1]은 아이디
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const NavbarScreen(),
+        ),
+      );
+    }
   }
 
   @override
@@ -116,17 +139,19 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           onPressed: () {
                             doLogin().whenComplete(
-                              () {
+                              () async {
                                 if (result == 1) {
                                   // 아이디, 비밀번호 모두 일치
                                   loginInfo.setUsername(username);
-                                  userpref.setString("battaUsername", username);
-                                  userpref.setString("battaPassword", password);
-                                  setState(() {
-                                    username = "";
-                                    password = "";
-                                  });
-                                  Navigator.push(
+                                  // write 함수를 통하여 key에 맞는 정보를 적게 됩니다.
+                                  //{"login" : "id id_value password password_value"}
+                                  //와 같은 형식으로 저장이 된다고 생각을 하면 됩니다.
+                                  await storage.write(
+                                    key: "login",
+                                    value:
+                                        "username $username password $password",
+                                  );
+                                  Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
@@ -249,93 +274,6 @@ class _LoginScreenState extends State<LoginScreen> {
       });
     } else {
       throw Exception(response.statusCode.toString());
-    }
-  }
-
-  Future initPrefs() async {
-    // 스마트폰 저장소에 액세스를 얻는다.
-    userpref = await SharedPreferences.getInstance();
-    // likedToons를 저장소에서 불러온다.
-    final battaUsername = userpref.getString('battaUsername');
-    final battaPassword = userpref.getString('battaPassword');
-    if (battaUsername != null && battaPassword != null) {
-      setState(() {
-        username = battaUsername;
-        password = battaPassword;
-        doLogin().whenComplete(() {
-          if (result == 1) {
-            // 아이디, 비밀번호 모두 일치
-            loginInfo.setUsername(username);
-            userpref.setString("battaUsername", username);
-            userpref.setString("battaPassword", password);
-            setState(() {
-              username = "";
-              password = "";
-            });
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const NavbarScreen(),
-              ),
-            );
-          } else if (result == 0) {
-            showDialog(
-              context: context,
-              barrierDismissible: true,
-              builder: (context) {
-                return AlertDialog(
-                  title: const Text("로그인 오류"),
-                  content: const SingleChildScrollView(
-                    child: ListBody(
-                      children: [
-                        Text("비밀번호가 다릅니다."),
-                      ],
-                    ),
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text("확인"),
-                    ),
-                  ],
-                );
-              },
-            );
-          } else if (result == -1) {
-            showDialog(
-              context: context,
-              barrierDismissible: true,
-              builder: (context) {
-                return AlertDialog(
-                  title: const Text("로그인 오류"),
-                  content: const SingleChildScrollView(
-                    child: ListBody(
-                      children: [
-                        Text("아이디가 없습니다."),
-                      ],
-                    ),
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text("확인"),
-                    ),
-                  ],
-                );
-              },
-            );
-          }
-        });
-      });
-    } else {
-      // 앱을 처음 실행하면 username, password는 없으므로 새로 만들어준다.
-      // 딱히 setString의 결과를 기다릴 필요는 없으므로 await를 쓸 필요는 없다.
-      userpref.setString('battaUsername', "");
-      userpref.setString('battaPassword', "");
     }
   }
 }
