@@ -46,7 +46,7 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 13, 32, 101),
-          title: const Text('이메일 변경'),
+          title: const Text('전화번호 변경'),
           centerTitle: true,
         ),
         body: Column(
@@ -59,9 +59,9 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
               child: TextField(
                 controller: TextEditingController(text: phone),
                 decoration: const InputDecoration(
-                  labelText: '이메일',
+                  labelText: '전화번호',
                 ),
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.phone,
                 onChanged: (value) {
                   phone = value;
                 },
@@ -85,7 +85,7 @@ class _ChangePhoneScreenState extends State<ChangePhoneScreen> {
                   });
                 },
                 child: const Text(
-                  '이메일 변경',
+                  '전화번호 변경',
                   style: TextStyle(color: Colors.white),
                 ),
               ),

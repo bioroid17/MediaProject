@@ -138,6 +138,12 @@ def getnick(request):
     nickname = Member.objects.get(username=username).nickname
     return Response({"nickname":nickname})
 
+@api_view(["GET"])
+def getphone(request):
+    username = request.GET["username"]
+    phone = Member.objects.get(username=username).phone
+    return Response({"phone":phone})
+
 @api_view(["POST"])
 @csrf_exempt
 def changepassword(request):

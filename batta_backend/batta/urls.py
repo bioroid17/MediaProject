@@ -15,6 +15,7 @@ urlpatterns = [
     path("deletecomment/", views.deletecomment),
     path("getemail", views.getemail),
     path("getnick", views.getnick),
+    path("getphone", views.getphone),
     path("changepassword/", views.changepassword),
     path("changeemail/", views.changeemail),
     path("changenick/", views.changenick),
