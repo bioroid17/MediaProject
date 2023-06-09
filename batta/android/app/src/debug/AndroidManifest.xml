@@ -10,7 +10,7 @@
     <application>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAf69evtPshuH3pQmFPWwryLln5KJVdsIE" />
+            android:value="${googleMapsApiKey}" />
     </application>
 
 
