@@ -49,7 +49,7 @@ class Comments extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
-                  width: width * 0.25,
+                  width: width * 0.20,
                 ),
                 if (writer == username)
                   PopupMenuButton(
